@@ -20,7 +20,7 @@ func (r *apiInfoResolver) UserAPI(ctx context.Context, obj *model.APIInfo) (*mod
 
 // Register is the resolver for the register field.
 func (r *queryResolver) Register(ctx context.Context, input model.RegisterInput) (*model.User, error) {
-	panic(fmt.Errorf("not implemented: Register - register"))
+	return resolvers.Register(ctx, r.UserService, input.Name, input.Email, input.Password)
 }
 
 // APIInfo is the resolver for the apiInfo field.

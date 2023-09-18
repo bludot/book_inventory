@@ -1,6 +1,9 @@
 package user
 
-import "github.com/bludot/tempmee/user/internal/db"
+import (
+	"errors"
+	"github.com/bludot/tempmee/user/internal/db"
+)
 
 type UserRepositoryImpl interface {
 	FindAll() ([]*User, error)
@@ -24,7 +27,13 @@ func (a *UserRepository) CreateUser(name string, email string, password string) 
 		Email:    email,
 		Password: password,
 	}
-	err := a.db.DB.Create(&user).Error
+	// find user before adding
+	_, err := a.FindByEmail(email)
+	if err == nil {
+		return nil, errors.New("user already exists")
+	}
+
+	err = a.db.DB.Create(&user).Error
 	if err != nil {
 		return nil, err
 	}
