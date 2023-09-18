@@ -1,0 +1,37 @@
+# GraphQL schema example
+#
+# https://gqlgen.com/getting-started/
+
+type UserApi {
+    "Version of event publish service"
+    version: String!
+}
+
+type ApiInfo {
+    userApi: UserApi! @goField(forceResolver: true)
+    name: String!
+}
+
+type User @key(fields: "id") {
+    id: ID!
+    name: String!
+    email: String!
+
+}
+
+type Query {
+    register(input: RegisterInput!): User!
+    apiInfo:  ApiInfo!
+    signIn(input: SignInInput!): String!
+}
+
+input RegisterInput {
+    name: String!
+    email: String!
+    password: String!
+}
+
+input SignInInput {
+    email: String!
+    password: String!
+}
