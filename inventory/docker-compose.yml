@@ -7,13 +7,13 @@ services:
       - '3306:3306'
     environment:
       - MYSQL_ROOT_PASSWORD=mysecretpassword
-      - MYSQL_USER=user
+      - MYSQL_USER=inventory
       - MYSQL_PASSWORD=mysecretpassword
-      - MYSQL_DATABASE=user
+      - MYSQL_DATABASE=inventory
     volumes:
-      - 'tempme-user_db:/var/lib/mysql'
+      - 'tempmee-inventory_db:/var/lib/mysql'
     networks:
-      - tempme-user-network
+      - tempmee-inventory-network
   redis:
     image: redis:5.0.5
     ports:
@@ -23,10 +23,10 @@ services:
       - './redis.conf:/etc/redis/redis.conf'
       - redis_data:/data
     networks:
-      - tempme-user-network
+      - tempmee-inventory-network
 
 networks:
-  tempme-user-network:
+  tempmee-inventory-network:
 volumes:
-  tempme-user_db:
+  tempmee-inventory_db:
   redis_data:

@@ -1,2 +1,2 @@
-# anime-api
-golang anime api with graphql
+# inventory-api
+

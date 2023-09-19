@@ -15,6 +15,10 @@ type ApiInfo {
 type Book @key(fields: "id") {
     id: ID!
     title: String!
+    author: String!
+    price: Int!
+    createdAt: Date!
+    updatedAt: Date!
 }
 
 

@@ -9,15 +9,15 @@ type Config struct {
 }
 
 type AppConfig struct {
-	APPName string `default:"anime-api"`
+	APPName string `default:"inventory-api"`
 	Port    int    `env:"PORT" default:"3000"`
 	Version string `default:"x.x.x"`
 }
 
 type DBConfig struct {
 	Host     string `default:"localhost" env:"DBHOST"`
-	DataBase string `default:"user" env:"DBNAME"`
-	User     string `default:"user" env:"DBUSERNAME"`
+	DataBase string `default:"inventory" env:"DBNAME"`
+	User     string `default:"inventory" env:"DBUSERNAME"`
 	Password string `required:"true" env:"DBPASSWORD" default:"mysecretpassword"`
 	Port     uint   `default:"3306" env:"DBPORT"`
 }
