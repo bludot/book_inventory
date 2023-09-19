@@ -22,6 +22,26 @@ func (r *queryResolver) APIInfo(ctx context.Context) (*model.APIInfo, error) {
 	panic(fmt.Errorf("not implemented: APIInfo - apiInfo"))
 }
 
+// Books is the resolver for the books field.
+func (r *queryResolver) Books(ctx context.Context) ([]*model.Book, error) {
+	panic(fmt.Errorf("not implemented: Books - books"))
+}
+
+// Book is the resolver for the book field.
+func (r *queryResolver) Book(ctx context.Context, id string) (*model.Book, error) {
+	panic(fmt.Errorf("not implemented: Book - book"))
+}
+
+// BooksByAuthor is the resolver for the booksByAuthor field.
+func (r *queryResolver) BooksByAuthor(ctx context.Context, author string) ([]*model.Book, error) {
+	panic(fmt.Errorf("not implemented: BooksByAuthor - booksByAuthor"))
+}
+
+// BookByTitle is the resolver for the bookByTitle field.
+func (r *queryResolver) BookByTitle(ctx context.Context, title string) (*model.Book, error) {
+	panic(fmt.Errorf("not implemented: BookByTitle - bookByTitle"))
+}
+
 // ApiInfo returns generated.ApiInfoResolver implementation.
 func (r *Resolver) ApiInfo() generated.ApiInfoResolver { return &apiInfoResolver{r} }
 

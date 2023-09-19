@@ -21,8 +21,10 @@ type Book @key(fields: "id") {
     updatedAt: Date!
 }
 
-
-
 type Query {
     apiInfo:  ApiInfo!
+    books: [Book!]!
+    book(id: ID!): Book!
+    booksByAuthor(author: String!): [Book!]!
+    bookByTitle(title: String!): Book!
 }

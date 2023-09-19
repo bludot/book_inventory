@@ -2,6 +2,7 @@ package graph
 
 import (
 	"github.com/bludot/tempmee/inventory/config"
+	"github.com/bludot/tempmee/inventory/internal/services/book"
 	"github.com/bludot/tempmee/inventory/internal/services/jwt"
 )
 
@@ -10,6 +11,7 @@ import (
 // It serves as dependency injection for your app, add any dependencies you require here.
 
 type Resolver struct {
-	Config     config.Config
-	JWTService jwt.JWTServiceImpl
+	Config      config.Config
+	JWTService  jwt.JWTServiceImpl
+	BookService book.BookServiceImpl
 }

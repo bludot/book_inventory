@@ -1,8 +1,8 @@
-package inventory_test
+package book_test
 
 import (
-	"github.com/bludot/tempmee/inventory/internal/db/repositories/book"
-	"github.com/bludot/tempmee/inventory/internal/services/inventory"
+	bookRepository "github.com/bludot/tempmee/inventory/internal/db/repositories/book"
+	"github.com/bludot/tempmee/inventory/internal/services/book"
 	"github.com/bludot/tempmee/inventory/mocks"
 	"github.com/stretchr/testify/assert"
 	"go.uber.org/mock/gomock"
@@ -18,7 +18,7 @@ func TestInventory_FindAllBooks(t *testing.T) {
 
 		bookRepo := mocks.NewMockBookRepositoryImpl(ctrl)
 
-		bookRepo.EXPECT().FindAll().Return(&[]book.Book{
+		bookRepo.EXPECT().FindAll().Return(&[]bookRepository.Book{
 			{
 				Title:  "title",
 				Author: "author",
@@ -26,7 +26,7 @@ func TestInventory_FindAllBooks(t *testing.T) {
 			},
 		}, nil)
 
-		inventory := inventory.NewInventoryService(bookRepo)
+		inventory := book.NewBookService(bookRepo)
 		books, err := inventory.FindAllBooks()
 		a.NoError(err)
 		a.Len(*books, 1)
@@ -43,9 +43,9 @@ func TestInventory_FindAllBooks(t *testing.T) {
 
 		bookRepo := mocks.NewMockBookRepositoryImpl(ctrl)
 
-		bookRepo.EXPECT().FindAll().Return(&[]book.Book{}, nil)
+		bookRepo.EXPECT().FindAll().Return(&[]bookRepository.Book{}, nil)
 
-		inventory := inventory.NewInventoryService(bookRepo)
+		inventory := book.NewBookService(bookRepo)
 		books, err := inventory.FindAllBooks()
 		a.NoError(err)
 		a.Len(*books, 0)
@@ -62,7 +62,7 @@ func TestInventory_FindAllBooks(t *testing.T) {
 
 		bookRepo.EXPECT().FindAll().Return(nil, assert.AnError)
 
-		inventory := inventory.NewInventoryService(bookRepo)
+		inventory := book.NewBookService(bookRepo)
 		books, err := inventory.FindAllBooks()
 		a.Error(err)
 		a.Nil(books)
@@ -80,13 +80,13 @@ func TestInventory_FindBookById(t *testing.T) {
 
 		bookRepo := mocks.NewMockBookRepositoryImpl(ctrl)
 
-		bookRepo.EXPECT().FindById("id").Return(&book.Book{
+		bookRepo.EXPECT().FindById("id").Return(&bookRepository.Book{
 			Title:  "title",
 			Author: "author",
 			Price:  1000,
 		}, nil)
 
-		inventory := inventory.NewInventoryService(bookRepo)
+		inventory := book.NewBookService(bookRepo)
 		book, err := inventory.FindBookById("id")
 		a.NoError(err)
 		a.Equal("title", book.Title)
@@ -105,7 +105,7 @@ func TestInventory_FindBookById(t *testing.T) {
 
 		bookRepo.EXPECT().FindById("id").Return(nil, assert.AnError)
 
-		inventory := inventory.NewInventoryService(bookRepo)
+		inventory := book.NewBookService(bookRepo)
 		book, err := inventory.FindBookById("id")
 		a.Error(err)
 		a.Nil(book)
@@ -122,13 +122,13 @@ func TestInventory_FindBookByTitle(t *testing.T) {
 
 		bookRepo := mocks.NewMockBookRepositoryImpl(ctrl)
 
-		bookRepo.EXPECT().FindByTitle("title").Return(&book.Book{
+		bookRepo.EXPECT().FindByTitle("title").Return(&bookRepository.Book{
 			Title:  "title",
 			Author: "author",
 			Price:  1000,
 		}, nil)
 
-		inventory := inventory.NewInventoryService(bookRepo)
+		inventory := book.NewBookService(bookRepo)
 		book, err := inventory.FindBookByTitle("title")
 		a.NoError(err)
 		a.Equal("title", book.Title)
@@ -147,7 +147,7 @@ func TestInventory_FindBookByTitle(t *testing.T) {
 
 		bookRepo.EXPECT().FindByTitle("title").Return(nil, assert.AnError)
 
-		inventory := inventory.NewInventoryService(bookRepo)
+		inventory := book.NewBookService(bookRepo)
 		book, err := inventory.FindBookByTitle("title")
 		a.Error(err)
 		a.Nil(book)
@@ -164,7 +164,7 @@ func TestInventory_FindBooksByAuthor(t *testing.T) {
 
 		bookRepo := mocks.NewMockBookRepositoryImpl(ctrl)
 
-		bookRepo.EXPECT().FindByAuthor("author").Return(&[]book.Book{
+		bookRepo.EXPECT().FindByAuthor("author").Return(&[]bookRepository.Book{
 			{
 				Title:  "title",
 				Author: "author",
@@ -172,7 +172,7 @@ func TestInventory_FindBooksByAuthor(t *testing.T) {
 			},
 		}, nil)
 
-		inventory := inventory.NewInventoryService(bookRepo)
+		inventory := book.NewBookService(bookRepo)
 		books, err := inventory.FindBooksByAuthor("author")
 		a.NoError(err)
 		a.Len(*books, 1)
@@ -191,11 +191,11 @@ func TestInventory_FindBooksByAuthor(t *testing.T) {
 
 		bookRepo.EXPECT().FindByAuthor("author").Return(nil, assert.AnError)
 
-		inventory := inventory.NewInventoryService(bookRepo)
+		inventory := book.NewBookService(bookRepo)
 		books, err := inventory.FindBooksByAuthor("author")
 		a.Error(err)
 		a.Nil(books)
 
 	})
-	
+
 }

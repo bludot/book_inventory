@@ -4,6 +4,12 @@ import (
 	"fmt"
 	"github.com/bludot/tempmee/inventory/config"
 	"github.com/bludot/tempmee/inventory/http/handlers"
+	book3 "github.com/bludot/tempmee/inventory/http/http_routes/inventory/book"
+	"github.com/bludot/tempmee/inventory/http/http_utils"
+	"github.com/bludot/tempmee/inventory/internal/db"
+	"github.com/bludot/tempmee/inventory/internal/db/repositories/book"
+	book2 "github.com/bludot/tempmee/inventory/internal/services/book"
+	"github.com/bludot/tempmee/inventory/internal/services/jwt"
 	"github.com/gorilla/mux"
 	"log"
 	"net/http"
@@ -13,16 +19,18 @@ func SetupHttpServer(cfg config.Config) *mux.Router {
 
 	r := mux.NewRouter()
 
-	//database := db.NewDatabase(cfg.DBConfig)
-	//jwtService := jwt.NewJWTService(cfg.JWTConfig, map[string]interface{}{})
-	//httpResolver := &http_utils.HTTPResolver{
-	//	Config:     cfg,
-	//	JWTService: jwtService,
-	//}
+	database := db.NewDatabase(cfg.DBConfig)
+	bookRepo := book.NewBookRepository(database)
+	bookService := book2.NewBookService(bookRepo)
+	jwtService := jwt.NewJWTService(cfg.JWTConfig, map[string]interface{}{})
+	httpResolver := &http_utils.HTTPResolver{
+		Config:      cfg,
+		JWTService:  jwtService,
+		BookService: bookService,
+	}
 
 	r.HandleFunc("/healthcheck", handlers.HealthCheckHandler()).Methods("GET")
-	//r.HandleFunc("/api/inventory", userHanlders.RegisterUserHandler(httpResolver)).Methods("GET")
-	//r.HandleFunc("/api/inventory", userHanlders.SignInUserHandler(httpResolver)).Methods("PATCH")
+	book3.RegisterBookRoutes(httpResolver, r)
 
 	return r
 }
