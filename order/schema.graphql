@@ -1,0 +1,67 @@
+# GraphQL schema example
+#
+# https://gqlgen.com/getting-started/
+
+directive @goField(forceResolver: Boolean, name: String) on INPUT_FIELD_DEFINITION
+    | FIELD_DEFINITION
+"""
+ensures a user is logged in to access a particular field
+"""
+directive @scoped(scope: String!) on FIELD_DEFINITION | ENUM_VALUE
+
+
+# lint-disable defined-types-are-used
+"helper scalar for IDE autocomplete & lint"
+scalar _Any
+# lint-enable defined-types-are-used
+
+"helper scalar for IDE autocomplete & lint"
+scalar _FieldSet
+
+# a union of all types that use the @key directive
+"helper scalar for IDE autocomplete & lint"
+directive @external on FIELD_DEFINITION
+
+"helper scalar for IDE autocomplete & lint"
+directive @requires(fields: _FieldSet!) on FIELD_DEFINITION
+
+"helper scalar for IDE autocomplete & lint"
+directive @provides(fields: _FieldSet!) on FIELD_DEFINITION
+
+"helper scalar for IDE autocomplete & lint"
+directive @key(fields: _FieldSet!) repeatable on OBJECT | INTERFACE
+
+# lint-disable defined-types-are-used
+"RFC3339 formatted DateTime"
+scalar Time
+
+"RFC3339 formatted Date"
+scalar Date
+
+
+type InventoryApi {
+    "Version of event publish service"
+    version: String!
+}
+
+type ApiInfo {
+    inventoryApi: InventoryApi! @goField(forceResolver: true)
+    name: String!
+}
+
+type Book @key(fields: "id") {
+    id: String!
+    title: String!
+    author: String!
+    price: Int!
+    createdAt: Date!
+    updatedAt: Date!
+}
+
+type Query {
+    apiInfo:  ApiInfo!
+    books: [Book!]!
+    book(id: String!): Book!
+    booksByAuthor(author: String!): [Book!]!
+    bookByTitle(title: String!): Book!
+}

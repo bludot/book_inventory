@@ -1,0 +1,7 @@
+query GetBookByID($id: String!) {
+    book(id: $id) {
+        title
+        author
+        price
+    }
+}

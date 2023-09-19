@@ -30,6 +30,11 @@ type JWTConfig struct {
 	Audience   string `default:"user" env:"JWTAUDIENCE"`
 }
 
+type InventoryAPIConfig struct {
+	Host string `default:"localhost" env:"INVENTORYAPIHOST"`
+	Port int    `default:"3000" env:"INVENTORYAPIPORT"`
+}
+
 func LoadConfigOrPanic() Config {
 	var config = Config{}
 	configor.Load(&config, "config/config.dev.json")

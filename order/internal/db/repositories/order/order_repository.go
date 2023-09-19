@@ -45,7 +45,7 @@ func (r *OrderRepository) FindById(ctx context.Context, id int) (*Order, error) 
 
 func (r *OrderRepository) FindAllByUserId(ctx context.Context, userId string) (*[]Order, error) {
 	var orders []Order
-	err := r.db.DB.Where("user_id = ?", userId).Find(&orders).Error
+	err := r.db.DB.Where("user_id = ? AND parent_order_id IS NULL", userId).Find(&orders).Error
 	if err != nil {
 		return nil, err
 	}

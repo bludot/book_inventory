@@ -28,16 +28,15 @@ func TestOrderRepository_Create(t *testing.T) {
 			orderRepo := order.NewOrderRepository(txdb)
 
 			order, err := orderRepo.Create(ctx, &order.Order{
-				UserID:    "user_id",
-				ProductId: "product_id",
-				Quantity:  1,
-				Price:     1000,
+				UserID:   "user_id",
+				Quantity: 1,
+				Price:    1000,
 			})
 
 			a.NoError(err)
 			a.NotNil(order)
 			a.Equal("user_id", order.UserID)
-			a.Equal("product_id", order.ProductId)
+			a.Nil(order.ProductId)
 			a.Equal(int64(1), order.Quantity)
 			a.Equal(int64(1000), order.Price)
 
@@ -64,10 +63,9 @@ func TestOrderRepository_FindById(t *testing.T) {
 			orderRepo := order.NewOrderRepository(txdb)
 
 			order, err := orderRepo.Create(ctx, &order.Order{
-				UserID:    "user_id",
-				ProductId: "product_id",
-				Quantity:  1,
-				Price:     1000,
+				UserID:   "user_id",
+				Quantity: 1,
+				Price:    1000,
 			})
 
 			a.NoError(err)
@@ -78,7 +76,7 @@ func TestOrderRepository_FindById(t *testing.T) {
 			a.NoError(err)
 			a.NotNil(order)
 			a.Equal("user_id", order.UserID)
-			a.Equal("product_id", order.ProductId)
+			a.Nil(order.ProductId)
 			a.Equal(int64(1), order.Quantity)
 			a.Equal(int64(1000), order.Price)
 
@@ -132,10 +130,9 @@ func TestOrderRepository_FindAllByUserId(t *testing.T) {
 			orderRepo := order.NewOrderRepository(txdb)
 
 			order, err := orderRepo.Create(ctx, &order.Order{
-				UserID:    "user_id",
-				ProductId: "product_id",
-				Quantity:  1,
-				Price:     1000,
+				UserID:   "user_id",
+				Quantity: 1,
+				Price:    1000,
 			})
 
 			a.NoError(err)
@@ -199,7 +196,6 @@ func TestOrderRepository_FindAllByParentOrderId(t *testing.T) {
 			order, err := orderRepo.Create(ctx, &order.Order{
 				UserID:        "user_id",
 				ParentOrderID: &parentId,
-				ProductId:     "product_id",
 				Quantity:      1,
 				Price:         1000,
 			})
@@ -263,21 +259,19 @@ func TestOrderRepository_Update(t *testing.T) {
 			orderRepo := order.NewOrderRepository(txdb)
 
 			createdOrder, err := orderRepo.Create(ctx, &order.Order{
-				UserID:    "user_id",
-				ProductId: "product_id",
-				Quantity:  1,
-				Price:     1000,
+				UserID:   "user_id",
+				Quantity: 1,
+				Price:    1000,
 			})
 
 			a.NoError(err)
 			a.NotNil(createdOrder)
 
 			updatedOrder, err := orderRepo.Update(ctx, &order.Order{
-				ID:        createdOrder.ID,
-				UserID:    "user_id",
-				ProductId: "product_id",
-				Quantity:  2,
-				Price:     2000,
+				ID:       createdOrder.ID,
+				UserID:   "user_id",
+				Quantity: 2,
+				Price:    2000,
 			})
 
 			a.NoError(err)
@@ -309,11 +303,10 @@ func TestOrderRepository_Update(t *testing.T) {
 			orderRepo := order.NewOrderRepository(txdb)
 
 			updatedOrder, err := orderRepo.Update(ctx, &order.Order{
-				ID:        1,
-				UserID:    "user_id",
-				ProductId: "product_id",
-				Quantity:  2,
-				Price:     2000,
+				ID:       1,
+				UserID:   "user_id",
+				Quantity: 2,
+				Price:    2000,
 			})
 
 			a.Error(err)
@@ -343,10 +336,9 @@ func TestOrderRepository_Delete(t *testing.T) {
 			orderRepo := order.NewOrderRepository(txdb)
 
 			createdOrder, err := orderRepo.Create(ctx, &order.Order{
-				UserID:    "user_id",
-				ProductId: "product_id",
-				Quantity:  1,
-				Price:     1000,
+				UserID:   "user_id",
+				Quantity: 1,
+				Price:    1000,
 			})
 
 			a.NoError(err)
