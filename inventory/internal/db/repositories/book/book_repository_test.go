@@ -29,10 +29,10 @@ func TestBookRepository_FindAll(t *testing.T) {
 
 			books, err := bookRepo.FindAll()
 			a.NoError(err)
-			a.Len(books, 1)
-			a.Equal("title", books[0].Title)
-			a.Equal("author", books[0].Author)
-			a.Equal(int64(1000), books[0].Price)
+			a.Len(*books, 1)
+			a.Equal("title", (*books)[0].Title)
+			a.Equal("author", (*books)[0].Author)
+			a.Equal(int64(1000), (*books)[0].Price)
 			return nil
 
 		})
@@ -51,7 +51,7 @@ func TestBookRepository_FindAll(t *testing.T) {
 			bookRepo := book.NewBookRepository(txdb)
 			books, err := bookRepo.FindAll()
 			a.NoError(err)
-			a.Len(books, 0)
+			a.Len(*books, 0)
 			return nil
 
 		})
@@ -174,12 +174,13 @@ func TestBookRepository_FindByAuthor(t *testing.T) {
 				Price:  1000,
 			})
 
-			foundBook, err := bookRepo.FindByAuthor(createdBook.Author)
+			foundBooks, err := bookRepo.FindByAuthor(createdBook.Author)
 			a.NoError(err)
-			a.Equal(createdBook.ID, foundBook.ID)
-			a.Equal("title", foundBook.Title)
-			a.Equal("author", foundBook.Author)
-			a.Equal(int64(1000), foundBook.Price)
+			a.Len(*foundBooks, 1)
+			a.Equal(createdBook.ID, (*foundBooks)[0].ID)
+			a.Equal("title", (*foundBooks)[0].Title)
+			a.Equal("author", (*foundBooks)[0].Author)
+			a.Equal(int64(1000), (*foundBooks)[0].Price)
 
 			return nil
 		})
@@ -247,7 +248,7 @@ func TestBookRepository_Create(t *testing.T) {
 
 			allBooks, err := bookRepo.FindAll()
 			a.NoError(err)
-			a.Len(allBooks, 1)
+			a.Len(*allBooks, 1)
 
 			return nil
 		})
