@@ -1,0 +1,50 @@
+# GraphQL schema example
+#
+# https://gqlgen.com/getting-started/
+
+type OrderApi {
+    "Version of event publish service"
+    version: String!
+}
+
+type ApiInfo {
+    orderApi: OrderApi! @goField(forceResolver: true)
+    name: String!
+}
+
+enum OrderStatus {
+    CREATED
+    PENDING
+    COMPLETED
+    CANCELLED
+    UNKNOWN
+}
+
+type Product @key(fields: "id") {
+    id: ID!
+    name: String!
+    price: Int!
+}
+
+type Order @key(fields: "id") {
+    id: ID!
+    userId: ID!
+    status: OrderStatus!
+    products: [Product!]!
+    total: Int!
+    createdAt: String!
+    updatedAt: String!
+}
+
+
+
+type Query {
+    apiInfo: ApiInfo!
+    orders: [Order!]!
+    order(id: ID!): Order!
+}
+
+type Mutation {
+    createOrder(userId: ID!, products: [ID!]!): Order!
+    updateOrderStatus(id: ID!, status: OrderStatus!): Order!
+}
