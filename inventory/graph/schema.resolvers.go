@@ -6,40 +6,40 @@ package graph
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/bludot/tempmee/inventory/graph/generated"
 	"github.com/bludot/tempmee/inventory/graph/model"
+	"github.com/bludot/tempmee/inventory/internal/resolvers"
 )
 
 // InventoryAPI is the resolver for the inventoryApi field.
 func (r *apiInfoResolver) InventoryAPI(ctx context.Context, obj *model.APIInfo) (*model.InventoryAPI, error) {
-	panic(fmt.Errorf("not implemented: InventoryAPI - inventoryApi"))
+	return resolvers.InventoryAPI(r.Config)
 }
 
 // APIInfo is the resolver for the apiInfo field.
 func (r *queryResolver) APIInfo(ctx context.Context) (*model.APIInfo, error) {
-	panic(fmt.Errorf("not implemented: APIInfo - apiInfo"))
+	return resolvers.APIInfo(r.Config)
 }
 
 // Books is the resolver for the books field.
 func (r *queryResolver) Books(ctx context.Context) ([]*model.Book, error) {
-	panic(fmt.Errorf("not implemented: Books - books"))
+	return resolvers.Books(ctx, r.BookService)
 }
 
 // Book is the resolver for the book field.
 func (r *queryResolver) Book(ctx context.Context, id string) (*model.Book, error) {
-	panic(fmt.Errorf("not implemented: Book - book"))
+	return resolvers.BookByID(ctx, r.BookService, id)
 }
 
 // BooksByAuthor is the resolver for the booksByAuthor field.
 func (r *queryResolver) BooksByAuthor(ctx context.Context, author string) ([]*model.Book, error) {
-	panic(fmt.Errorf("not implemented: BooksByAuthor - booksByAuthor"))
+	return resolvers.BooksByAuthor(ctx, r.BookService, author)
 }
 
 // BookByTitle is the resolver for the bookByTitle field.
 func (r *queryResolver) BookByTitle(ctx context.Context, title string) (*model.Book, error) {
-	panic(fmt.Errorf("not implemented: BookByTitle - bookByTitle"))
+	return resolvers.BookByTitle(ctx, r.BookService, title)
 }
 
 // ApiInfo returns generated.ApiInfoResolver implementation.

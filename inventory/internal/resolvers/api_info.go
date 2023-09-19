@@ -13,3 +13,9 @@ func APIInfo(cfg config.Config) (*model.APIInfo, error) {
 		},
 	}, nil
 }
+
+func InventoryAPI(cfg config.Config) (*model.InventoryAPI, error) {
+	return &model.InventoryAPI{
+		Version: cfg.AppConfig.Version,
+	}, nil
+}

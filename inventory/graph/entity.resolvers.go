@@ -6,15 +6,15 @@ package graph
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/bludot/tempmee/inventory/graph/generated"
 	"github.com/bludot/tempmee/inventory/graph/model"
+	"github.com/bludot/tempmee/inventory/internal/resolvers"
 )
 
 // FindBookByID is the resolver for the findBookByID field.
 func (r *entityResolver) FindBookByID(ctx context.Context, id string) (*model.Book, error) {
-	panic(fmt.Errorf("not implemented: FindBookByID - findBookByID"))
+	return resolvers.BookByID(ctx, r.BookService, id)
 }
 
 // Entity returns generated.EntityResolver implementation.
