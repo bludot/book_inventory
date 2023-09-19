@@ -10,20 +10,20 @@ import (
 	"net/http"
 )
 
-func SetupServer(cfg config.Config) *mux.Router {
+func SetupGraphQLServer(cfg config.Config) *mux.Router {
 
 	router := mux.NewRouter()
 
 	router.Handle("/ui/playground", playground.Handler("GraphQL playground", "/graphql")).Methods("GET")
-	router.Handle("/graphql", handlers.BuildRootHandler(cfg)).Methods("POST")
+	router.Handle("/graphql", handlers.BuildGraphQLHandler(cfg)).Methods("POST")
 	router.Handle("/healthcheck", handlers.HealthCheckHandler()).Methods("GET")
 
 	return router
 }
 
-func StartServer() error {
+func StartGraphQLServer() error {
 	cfg := config.LoadConfigOrPanic()
-	router := SetupServer(cfg)
+	router := SetupGraphQLServer(cfg)
 
 	log.Printf("connect to http://localhost:%d/ for GraphQL playground", cfg.AppConfig.Port)
 

@@ -13,7 +13,7 @@ import (
 	"net/http"
 )
 
-func BuildRootHandler(conf config.Config) http.Handler {
+func BuildGraphQLHandler(conf config.Config) http.Handler {
 	database := db.NewDatabase(conf.DBConfig)
 	userRepository := user2.NewUserRepository(database)
 	userService := user.NewUserService(userRepository)

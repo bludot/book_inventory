@@ -5,13 +5,12 @@ package commands
 
 import (
 	"github.com/bludot/tempmee/user/http"
-
 	"github.com/spf13/cobra"
 )
 
-// serveCmd represents the serve command
-var serveCmd = &cobra.Command{
-	Use:   "serve",
+// httpCmd represents the http command
+var httpCmd = &cobra.Command{
+	Use:   "http",
 	Short: "A brief description of your command",
 	Long: `A longer description that spans multiple lines and likely contains examples
 and usage of using your command. For example:
@@ -20,20 +19,20 @@ Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		return http.StartGraphQLServer()
+		return http.StartHttpServer()
 	},
 }
 
 func init() {
-	rootCmd.AddCommand(serveCmd)
+	serveCmd.AddCommand(httpCmd)
 
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command
 	// and all subcommands, e.g.:
-	// serveCmd.PersistentFlags().String("foo", "", "A help for foo")
+	// httpCmd.PersistentFlags().String("foo", "", "A help for foo")
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
-	// serveCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	// httpCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
