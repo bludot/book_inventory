@@ -76,7 +76,7 @@ func SignInUserHandler(resolver *httpUtils.HTTPResolver) http.HandlerFunc {
 			return
 		}
 
-		user, err := resolvers.SignIn(ctx, resolver.UserService, signInUserRequest.Email, signInUserRequest.Password)
+		user, err := resolvers.SignIn(ctx, resolver.UserService, resolver.JWTService, signInUserRequest.Email, signInUserRequest.Password)
 		if err != nil {
 			w.WriteHeader(http.StatusUnauthorized)
 			w.Header().Set("Content-Type", "application/json")

@@ -8,6 +8,7 @@ import (
 	"github.com/bludot/tempmee/user/http/http_utils"
 	"github.com/bludot/tempmee/user/internal/db"
 	userRepo "github.com/bludot/tempmee/user/internal/db/repositories/user"
+	"github.com/bludot/tempmee/user/internal/services/jwt"
 	"github.com/bludot/tempmee/user/internal/services/user"
 	"github.com/gorilla/mux"
 	"log"
@@ -21,9 +22,11 @@ func SetupHttpServer(cfg config.Config) *mux.Router {
 	database := db.NewDatabase(cfg.DBConfig)
 	userRepository := userRepo.NewUserRepository(database)
 	userService := user.NewUserService(userRepository)
+	jwtService := jwt.NewJWTService(cfg.JWTConfig, map[string]interface{}{})
 	httpResolver := &http_utils.HTTPResolver{
 		Config:      cfg,
 		UserService: userService,
+		JWTService:  jwtService,
 	}
 
 	r.HandleFunc("/healthcheck", handlers.HealthCheckHandler()).Methods("GET")

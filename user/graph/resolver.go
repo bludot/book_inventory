@@ -2,6 +2,7 @@ package graph
 
 import (
 	"github.com/bludot/tempmee/user/config"
+	"github.com/bludot/tempmee/user/internal/services/jwt"
 	"github.com/bludot/tempmee/user/internal/services/user"
 )
 
@@ -12,4 +13,5 @@ import (
 type Resolver struct {
 	Config      config.Config
 	UserService user.UserServiceImpl
+	JWTService  jwt.JWTServiceImpl
 }

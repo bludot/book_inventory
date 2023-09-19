@@ -5,14 +5,14 @@ go 1.20
 require (
 	github.com/99designs/gqlgen v0.17.30
 	github.com/go-sql-driver/mysql v1.7.1
+	github.com/golang-jwt/jwt/v5 v5.0.0
 	github.com/golang-migrate/migrate/v4 v4.15.2
-	github.com/golang/mock v1.6.0
 	github.com/gorilla/mux v1.8.0
 	github.com/jinzhu/configor v1.2.1
 	github.com/spf13/cobra v1.7.0
 	github.com/stretchr/testify v1.8.2
 	github.com/vektah/gqlparser/v2 v2.5.1
-	go.uber.org/mock v0.2.0
+	go.uber.org/mock v0.3.0
 	gorm.io/driver/mysql v1.5.0
 	gorm.io/gorm v1.25.0
 
@@ -23,7 +23,6 @@ require (
 	github.com/agnivade/levenshtein v1.1.1 // indirect
 	github.com/cpuguy83/go-md2man/v2 v2.0.2 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
-	github.com/golang-jwt/jwt/v5 v5.0.0 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/google/go-github/v39 v39.2.0 // indirect
 	github.com/google/go-querystring v1.1.0 // indirect

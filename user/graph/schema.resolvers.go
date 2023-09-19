@@ -28,8 +28,8 @@ func (r *queryResolver) APIInfo(ctx context.Context) (*model.APIInfo, error) {
 }
 
 // SignIn is the resolver for the signIn field.
-func (r *queryResolver) SignIn(ctx context.Context, input model.SignInInput) (*model.User, error) {
-	return resolvers.SignIn(ctx, r.UserService, input.Email, input.Password)
+func (r *queryResolver) SignIn(ctx context.Context, input model.SignInInput) (*model.SignInPayload, error) {
+	return resolvers.SignIn(ctx, r.UserService, r.JWTService, input.Email, input.Password)
 }
 
 // ApiInfo returns generated.ApiInfoResolver implementation.

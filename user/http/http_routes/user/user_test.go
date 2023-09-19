@@ -99,15 +99,18 @@ func TestSignInUserHandler(t *testing.T) {
 
 		cfg := config.LoadConfigOrPanic()
 		userService := mocks.NewMockUserServiceImpl(ctrl)
+		jwtService := mocks.NewMockJWTServiceImpl(ctrl)
 		userService.EXPECT().SignIn(gomock.Any(), gomock.Any(), gomock.Any()).Return(&userRepo.User{
 			Name:     "test",
 			Email:    "test",
 			Password: "test",
 		}, nil)
+		jwtService.EXPECT().GenerateToken(gomock.Any(), gomock.Any()).Return("test", nil)
 
 		httpResolver := &http_utils.HTTPResolver{
 			Config:      cfg,
 			UserService: userService,
+			JWTService:  jwtService,
 		}
 
 		handler := userHanlders.SignInUserHandler(httpResolver)

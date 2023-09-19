@@ -19,10 +19,15 @@ type User @key(fields: "id") {
 
 }
 
+type SignInPayload {
+    token: String!
+    user: User!
+}
+
 type Query {
     register(input: RegisterInput!): User!
     apiInfo:  ApiInfo!
-    signIn(input: SignInInput!): User!
+    signIn(input: SignInInput!): SignInPayload!
 }
 
 input RegisterInput {

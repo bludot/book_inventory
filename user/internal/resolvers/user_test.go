@@ -51,16 +51,19 @@ func TestSignIn(t *testing.T) {
 		defer ctrl.Finish()
 
 		u := mocks.NewMockUserServiceImpl(ctrl)
+		j := mocks.NewMockJWTServiceImpl(ctrl)
 		u.EXPECT().SignIn(gomock.Any(), "test", "test").Return(&user.User{
 			Name:     "test",
 			Email:    "test",
 			Password: "test",
 		}, nil)
+		j.EXPECT().GenerateToken(gomock.Any(), gomock.Any()).Return("test", nil)
 
-		user, err := resolvers.SignIn(nil, u, "test", "test")
+		payload, err := resolvers.SignIn(nil, u, j, "test", "test")
 		a.NoError(err)
-		a.NotNil(user)
-		a.Equal("test", user.Name)
+		a.NotNil(payload)
+		a.Equal("test", payload.User.Name)
+		a.Equal("test", payload.Token)
 
 	})
 
@@ -70,10 +73,11 @@ func TestSignIn(t *testing.T) {
 		defer ctrl.Finish()
 
 		u := mocks.NewMockUserServiceImpl(ctrl)
+		j := mocks.NewMockJWTServiceImpl(ctrl)
 		u.EXPECT().SignIn(gomock.Any(), "test", "test").Return(nil, assert.AnError)
 
-		user, err := resolvers.SignIn(nil, u, "test", "test")
+		payload, err := resolvers.SignIn(nil, u, j, "test", "test")
 		a.Error(err)
-		a.Nil(user)
+		a.Nil(payload)
 	})
 }
