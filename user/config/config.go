@@ -5,6 +5,7 @@ import "github.com/jinzhu/configor"
 type Config struct {
 	AppConfig AppConfig
 	DBConfig  DBConfig
+	JWTConfig JWTConfig
 }
 
 type AppConfig struct {
@@ -19,6 +20,14 @@ type DBConfig struct {
 	User     string `default:"user" env:"DBUSERNAME"`
 	Password string `required:"true" env:"DBPASSWORD" default:"mysecretpassword"`
 	Port     uint   `default:"3306" env:"DBPORT"`
+}
+
+type JWTConfig struct {
+	PrivateKey string `default:"mysecretkey" env:"JWTPRIVATEKEY"`
+	PublicKey  string `default:"publickey" env:"JWTPUBLICKEY"`
+	Expire     uint64 `default:"60" env:"JWTEXPIRE"`
+	Issuer     string `default:"user" env:"JWTISSUER"`
+	Audience   string `default:"user" env:"JWTAUDIENCE"`
 }
 
 func LoadConfigOrPanic() Config {
