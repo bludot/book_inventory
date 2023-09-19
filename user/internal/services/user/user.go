@@ -2,6 +2,7 @@ package user
 
 import (
 	"context"
+	"errors"
 	"github.com/bludot/tempmee/user/internal/db/repositories/user"
 )
 
@@ -16,7 +17,7 @@ type UserService struct {
 	Repository user.UserRepositoryImpl
 }
 
-func NewAnimeService(userRepository user.UserRepositoryImpl) UserServiceImpl {
+func NewUserService(userRepository user.UserRepositoryImpl) UserServiceImpl {
 	return &UserService{
 		Repository: userRepository,
 	}
@@ -32,10 +33,10 @@ func (a *UserService) SignIn(ctx context.Context, email string, password string)
 		return nil, err
 	}
 	if foundUser == nil {
-		return nil, nil
+		return nil, errors.New("user not found")
 	}
 	if foundUser.Password != password {
-		return nil, nil
+		return nil, errors.New("password is incorrect")
 	}
 	return foundUser, nil
 

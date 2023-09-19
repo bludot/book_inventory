@@ -16,7 +16,7 @@ import (
 func BuildRootHandler(conf config.Config) http.Handler {
 	database := db.NewDatabase(conf.DBConfig)
 	userRepository := user2.NewUserRepository(database)
-	userService := user.NewAnimeService(userRepository)
+	userService := user.NewUserService(userRepository)
 	resolvers := &graph.Resolver{
 		Config:      conf,
 		UserService: userService,

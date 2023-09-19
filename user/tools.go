@@ -8,6 +8,6 @@ import (
 	_ "github.com/99designs/gqlgen/graphql/introspection"
 	_ "github.com/golang-migrate/migrate/v4/database/postgres"
 	_ "github.com/golang-migrate/migrate/v4/source/github"
-	_ "github.com/golang/mock/mockgen"
-	_ "github.com/golang/mock/mockgen/model"
+	_ "go.uber.org/mock/mockgen"
+	_ "go.uber.org/mock/mockgen/model"
 )
