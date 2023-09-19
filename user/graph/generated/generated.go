@@ -88,7 +88,7 @@ type EntityResolver interface {
 type QueryResolver interface {
 	Register(ctx context.Context, input model.RegisterInput) (*model.User, error)
 	APIInfo(ctx context.Context) (*model.APIInfo, error)
-	SignIn(ctx context.Context, input model.SignInInput) (string, error)
+	SignIn(ctx context.Context, input model.SignInInput) (*model.User, error)
 }
 
 type executableSchema struct {
@@ -309,7 +309,7 @@ type User @key(fields: "id") {
 type Query {
     register(input: RegisterInput!): User!
     apiInfo:  ApiInfo!
-    signIn(input: SignInInput!): String!
+    signIn(input: SignInInput!): User!
 }
 
 input RegisterInput {
@@ -781,9 +781,9 @@ func (ec *executionContext) _Query_signIn(ctx context.Context, field graphql.Col
 		}
 		return graphql.Null
 	}
-	res := resTmp.(string)
+	res := resTmp.(*model.User)
 	fc.Result = res
-	return ec.marshalNString2string(ctx, field.Selections, res)
+	return ec.marshalNUser2ᚖgithubᚗcomᚋbludotᚋtempmeeᚋuserᚋgraphᚋmodelᚐUser(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Query_signIn(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -793,7 +793,15 @@ func (ec *executionContext) fieldContext_Query_signIn(ctx context.Context, field
 		IsMethod:   true,
 		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type String does not have child fields")
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_User_id(ctx, field)
+			case "name":
+				return ec.fieldContext_User_name(ctx, field)
+			case "email":
+				return ec.fieldContext_User_email(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type User", field.Name)
 		},
 	}
 	defer func() {

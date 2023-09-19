@@ -22,7 +22,7 @@ type User @key(fields: "id") {
 type Query {
     register(input: RegisterInput!): User!
     apiInfo:  ApiInfo!
-    signIn(input: SignInInput!): String!
+    signIn(input: SignInInput!): User!
 }
 
 input RegisterInput {
