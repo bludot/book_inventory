@@ -5,6 +5,7 @@ import (
 	"github.com/bludot/tempmee/user/config"
 	"github.com/bludot/tempmee/user/http/handlers"
 	userHanlders "github.com/bludot/tempmee/user/http/http_routes/user"
+	"github.com/bludot/tempmee/user/http/http_utils"
 	"github.com/bludot/tempmee/user/internal/db"
 	userRepo "github.com/bludot/tempmee/user/internal/db/repositories/user"
 	"github.com/bludot/tempmee/user/internal/services/user"
