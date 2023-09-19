@@ -13,6 +13,7 @@ generate-mocks:
 	go get go.uber.org/mock/mockgen/model
 	go install go.uber.org/mock/mockgen@latest
 	mockgen -destination=./mocks/mock_jwt_client.go -package=mocks github.com/bludot/tempmee/inventory/internal/services/jwt JWTServiceImpl
+	mockgen -destination=./mocks/mock_book_repository.go -package=mocks github.com/bludot/tempmee/inventory/internal/db/repositories/book BookRepositoryImpl
 
 test:
 	go test -v -race -coverprofile=coverage.txt -covermode=atomic ./...
