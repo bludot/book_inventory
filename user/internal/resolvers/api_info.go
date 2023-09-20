@@ -14,7 +14,7 @@ func APIInfo(cfg config.Config) (*model.APIInfo, error) {
 	}, nil
 }
 
-func AnimeAPI(cfg config.Config) (*model.UserAPI, error) {
+func UserAPI(cfg config.Config) (*model.UserAPI, error) {
 	return &model.UserAPI{
 		Version: cfg.AppConfig.Version,
 	}, nil

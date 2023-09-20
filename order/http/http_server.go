@@ -8,6 +8,7 @@ import (
 	"github.com/bludot/tempmee/order/http/http_utils"
 	"github.com/bludot/tempmee/order/internal/db"
 	"github.com/bludot/tempmee/order/internal/db/repositories/order"
+	"github.com/bludot/tempmee/order/internal/services/inventory_api"
 	"github.com/bludot/tempmee/order/internal/services/jwt"
 	order2 "github.com/bludot/tempmee/order/internal/services/order"
 	"github.com/gorilla/mux"
@@ -22,10 +23,12 @@ func SetupHttpServer(cfg config.Config) *mux.Router {
 	database := db.NewDatabase(cfg.DBConfig)
 	orderRepository := order.NewOrderRepository(database)
 	orderService := order2.NewOrderService(orderRepository)
+	inventoryApi := inventory_api.NewInventoryApi(cfg.InventoryAPIConfig)
 	jwtService := jwt.NewJWTService(cfg.JWTConfig, map[string]interface{}{})
 	httpResolver := &http_utils.HTTPResolver{
 		Config:       cfg,
 		OrderService: orderService,
+		InventoryApi: inventoryApi,
 		JWTService:   jwtService,
 	}
 

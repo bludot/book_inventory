@@ -1,0 +1,13 @@
+INSERT INTO `order`.`order` (id, parent_order_id, user_id, product_id, quantity, price, created_at, updated_at, status) VALUES (2, null, '1', null, 0, 0, '2023-09-20 02:01:48', '2023-09-20 02:01:48', 'created');
+INSERT INTO `order`.`order` (id, parent_order_id, user_id, product_id, quantity, price, created_at, updated_at, status) VALUES (3, 2, '1', '1', 1, 1000, '2023-09-20 02:01:48', '2023-09-20 02:01:48', 'unknown');
+INSERT INTO `order`.`order` (id, parent_order_id, user_id, product_id, quantity, price, created_at, updated_at, status) VALUES (4, 2, '1', '2', 1, 1000, '2023-09-20 02:01:48', '2023-09-20 02:01:48', 'unknown');
+INSERT INTO `order`.`order` (id, parent_order_id, user_id, product_id, quantity, price, created_at, updated_at, status) VALUES (5, 2, '1', '3', 1, 1000, '2023-09-20 02:01:48', '2023-09-20 02:01:48', 'unknown');
+INSERT INTO `order`.`order` (id, parent_order_id, user_id, product_id, quantity, price, created_at, updated_at, status) VALUES (6, null, '1', null, 0, 0, '2023-09-20 02:35:42', '2023-09-20 02:35:42', 'created');
+INSERT INTO `order`.`order` (id, parent_order_id, user_id, product_id, quantity, price, created_at, updated_at, status) VALUES (7, 6, '1', '1', 0, 0, '2023-09-20 02:35:42', '2023-09-20 02:35:42', 'unknown');
+INSERT INTO `order`.`order` (id, parent_order_id, user_id, product_id, quantity, price, created_at, updated_at, status) VALUES (8, 6, '1', '2', 0, 0, '2023-09-20 02:35:42', '2023-09-20 02:35:42', 'unknown');
+INSERT INTO `order`.`order` (id, parent_order_id, user_id, product_id, quantity, price, created_at, updated_at, status) VALUES (9, 6, '1', '3', 0, 0, '2023-09-20 02:35:42', '2023-09-20 02:35:42', 'unknown');
+INSERT INTO `order`.`order` (id, parent_order_id, user_id, product_id, quantity, price, created_at, updated_at, status) VALUES (10, null, '1', null, 0, 0, '2023-09-20 14:58:15', '2023-09-20 14:58:15', 'created');
+INSERT INTO `order`.`order` (id, parent_order_id, user_id, product_id, quantity, price, created_at, updated_at, status) VALUES (11, 10, '1', '1', 1, 0, '2023-09-20 14:58:15', '2023-09-20 14:58:15', 'unknown');
+INSERT INTO `order`.`order` (id, parent_order_id, user_id, product_id, quantity, price, created_at, updated_at, status) VALUES (12, 10, '1', '2', 2, 0, '2023-09-20 14:58:15', '2023-09-20 14:58:15', 'unknown');
+INSERT INTO `order`.`order` (id, parent_order_id, user_id, product_id, quantity, price, created_at, updated_at, status) VALUES (13, 10, '1', '3', 3, 0, '2023-09-20 14:58:15', '2023-09-20 14:58:15', 'unknown');
+INSERT INTO `order`.`order` (id, parent_order_id, user_id, product_id, quantity, price, created_at, updated_at, status) VALUES (14, 10, '1', '4', 4, 0, '2023-09-20 14:58:15', '2023-09-20 14:58:15', 'unknown');

@@ -57,7 +57,21 @@ services:
       context: ./user
       dockerfile: Dockerfile
     command: "./main migrate up"
-    restart: always
+    restart: on-failure
+    depends_on:
+      - mysql-user
+      - redis
+    networks:
+      - tempmee-network
+    environment:
+      - PORT=3000
+      - DBHOST=mysql-user
+  user-api_seed:
+    build:
+      context: ./user
+      dockerfile: Dockerfile
+    command: "./main migrate seed"
+    restart: on-failure
     depends_on:
       - mysql-user
       - redis
@@ -86,7 +100,21 @@ services:
       context: ./inventory
       dockerfile: Dockerfile
     command: "./main migrate up"
-    restart: always
+    restart: on-failure
+    depends_on:
+      - mysql-inventory
+      - redis
+    networks:
+      - tempmee-network
+    environment:
+      - PORT=3000
+      - DBHOST=mysql-inventory
+  inventory-api_seed:
+    build:
+      context: ./inventory
+      dockerfile: Dockerfile
+    command: "./main migrate seed"
+    restart: on-failure
     depends_on:
       - mysql-inventory
       - redis
@@ -115,7 +143,21 @@ services:
       context: ./order
       dockerfile: Dockerfile
     command: "./main migrate up"
-    restart: always
+    restart: on-failure
+    depends_on:
+      - mysql-order
+      - redis
+    networks:
+      - tempmee-network
+    environment:
+      - PORT=3000
+      - DBHOST=mysql-order
+  order-api_seed:
+    build:
+      context: ./order
+      dockerfile: Dockerfile
+    command: "./main migrate seed"
+    restart: on-failure
     depends_on:
       - mysql-order
       - redis

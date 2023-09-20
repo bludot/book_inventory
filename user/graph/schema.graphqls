@@ -25,9 +25,12 @@ type SignInPayload {
 }
 
 type Query {
-    register(input: RegisterInput!): User!
-    apiInfo:  ApiInfo!
+    apiInfo: ApiInfo!
     signIn(input: SignInInput!): SignInPayload!
+}
+
+type Mutation {
+    register(input: RegisterInput!): User!
 }
 
 input RegisterInput {

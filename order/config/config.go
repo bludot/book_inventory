@@ -32,8 +32,9 @@ type JWTConfig struct {
 }
 
 type InventoryAPIConfig struct {
-	Host string `default:"apollo-router" env:"INVENTORYAPIHOST"`
-	Port int    `default:"4000" env:"INVENTORYAPIPORT"`
+	Host string `default:"inventory-api" env:"INVENTORYAPIHOST"`
+	Port int    `default:"3000" env:"INVENTORYAPIPORT"`
+	Path string `default:"/api/inventory/books" env:"INVENTORYAPIPATH"`
 }
 
 func LoadConfigOrPanic() Config {

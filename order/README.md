@@ -1,2 +1,2 @@
-# anime-api
-golang anime api with graphql
+# order-api
+This is the order microservice. It is responsible for managing orders and their information.

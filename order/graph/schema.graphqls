@@ -33,6 +33,7 @@ type Order @key(fields: "id") {
     status: OrderStatus!
     products: [String!]!
     total: Int!
+    quantity: [Int!]!
     createdAt: String!
     updatedAt: String!
 }

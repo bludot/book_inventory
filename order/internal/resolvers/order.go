@@ -25,8 +25,10 @@ func GetOrderByID(ctx context.Context, orderService order.OrderServiceImpl, id s
 	}
 
 	var products []string
+	var quantity []int64
 	for _, subOrder := range *subOrders {
 		products = append(products, *subOrder.ProductId)
+		quantity = append(quantity, subOrder.Quantity)
 	}
 
 	return &model.Order{
@@ -125,6 +127,7 @@ func MapOrdersAndSubOrders(ctx context.Context, orders []orderRepository.Order) 
 			for _, orderItem := range orderItems {
 				if orderItem.ID == strconv.Itoa(*order.ParentOrderID) {
 					orderItem.Products = append(orderItem.Products, *order.ProductId)
+					orderItem.Quantity = append(orderItem.Quantity, int(order.Quantity))
 				}
 			}
 

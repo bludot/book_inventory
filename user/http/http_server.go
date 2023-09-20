@@ -30,8 +30,7 @@ func SetupHttpServer(cfg config.Config) *mux.Router {
 	}
 
 	r.HandleFunc("/healthcheck", handlers.HealthCheckHandler()).Methods("GET")
-	r.HandleFunc("/api/user/register", userHanlders.RegisterUserHandler(httpResolver)).Methods("POST")
-	r.HandleFunc("/api/user/signin", userHanlders.SignInUserHandler(httpResolver)).Methods("POST")
+	userHanlders.RegisterUserRoutes(httpResolver, r)
 
 	return r
 }

@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	httpUtils "github.com/bludot/tempmee/user/http/http_utils"
 	"github.com/bludot/tempmee/user/internal/resolvers"
+	"github.com/gorilla/mux"
 	"io"
 	"net/http"
 )
@@ -94,4 +95,9 @@ func SignInUserHandler(resolver *httpUtils.HTTPResolver) http.HandlerFunc {
 		json.NewEncoder(w).Encode(user)
 
 	}
+}
+
+func RegisterUserRoutes(resolver *httpUtils.HTTPResolver, router *mux.Router) {
+	router.HandleFunc("/api/user/register", RegisterUserHandler(resolver)).Methods("POST")
+	router.HandleFunc("/api/user/signin", SignInUserHandler(resolver)).Methods("POST")
 }

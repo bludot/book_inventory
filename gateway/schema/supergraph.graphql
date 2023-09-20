@@ -96,11 +96,13 @@ enum link__Purpose {
 type Mutation
   @join__type(graph: INVENTORY)
   @join__type(graph: ODER)
+  @join__type(graph: USER)
 {
   createBook(input: CreateBookInput!): Book! @join__field(graph: INVENTORY)
   deleteBook(id: String!): Book! @join__field(graph: INVENTORY)
   createOrder(input: CreateOrderInput!): Order! @join__field(graph: ODER)
   updateOrderStatus(input: UpdateOrderStatusInput!): Order! @join__field(graph: ODER)
+  register(input: RegisterInput!): User! @join__field(graph: USER)
 }
 
 type Order
@@ -113,6 +115,7 @@ type Order
   userId: ID! @join__field(graph: ODER)
   status: OrderStatus! @join__field(graph: ODER)
   total: Int! @join__field(graph: ODER)
+  quantity: [Int!]! @join__field(graph: ODER)
   createdAt: String! @join__field(graph: ODER)
   updatedAt: String! @join__field(graph: ODER)
 }
@@ -155,7 +158,6 @@ type Query
   orders: [Order!]! @join__field(graph: ODER)
   order(id: ID!): Order! @join__field(graph: ODER)
   ordersByUser(userId: ID!): [Order!]! @join__field(graph: ODER)
-  register(input: RegisterInput!): User! @join__field(graph: USER)
   signIn(input: SignInInput!): SignInPayload! @join__field(graph: USER)
 }
 

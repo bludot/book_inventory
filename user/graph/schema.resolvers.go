@@ -14,11 +14,11 @@ import (
 
 // UserAPI is the resolver for the userApi field.
 func (r *apiInfoResolver) UserAPI(ctx context.Context, obj *model.APIInfo) (*model.UserAPI, error) {
-	return resolvers.AnimeAPI(r.Config)
+	return resolvers.UserAPI(r.Config)
 }
 
 // Register is the resolver for the register field.
-func (r *queryResolver) Register(ctx context.Context, input model.RegisterInput) (*model.User, error) {
+func (r *mutationResolver) Register(ctx context.Context, input model.RegisterInput) (*model.User, error) {
 	return resolvers.Register(ctx, r.UserService, input.Name, input.Email, input.Password)
 }
 
@@ -35,8 +35,12 @@ func (r *queryResolver) SignIn(ctx context.Context, input model.SignInInput) (*m
 // ApiInfo returns generated.ApiInfoResolver implementation.
 func (r *Resolver) ApiInfo() generated.ApiInfoResolver { return &apiInfoResolver{r} }
 
+// Mutation returns generated.MutationResolver implementation.
+func (r *Resolver) Mutation() generated.MutationResolver { return &mutationResolver{r} }
+
 // Query returns generated.QueryResolver implementation.
 func (r *Resolver) Query() generated.QueryResolver { return &queryResolver{r} }
 
 type apiInfoResolver struct{ *Resolver }
+type mutationResolver struct{ *Resolver }
 type queryResolver struct{ *Resolver }
