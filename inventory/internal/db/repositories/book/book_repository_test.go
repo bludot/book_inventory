@@ -21,13 +21,13 @@ func TestBookRepository_FindAll(t *testing.T) {
 			}
 			defer tx.Rollback()
 			bookRepo := book.NewBookRepository(txdb)
-			_, _ = bookRepo.Create(book.Book{
+			_, _ = bookRepo.Create(nil, book.Book{
 				Title:  "title",
 				Author: "author",
 				Price:  1000,
 			})
 
-			books, err := bookRepo.FindAll()
+			books, err := bookRepo.FindAll(nil)
 			a.NoError(err)
 			a.Len(*books, 1)
 			a.Equal("title", (*books)[0].Title)
@@ -49,7 +49,7 @@ func TestBookRepository_FindAll(t *testing.T) {
 			}
 			defer tx.Rollback()
 			bookRepo := book.NewBookRepository(txdb)
-			books, err := bookRepo.FindAll()
+			books, err := bookRepo.FindAll(nil)
 			a.NoError(err)
 			a.Len(*books, 0)
 			return nil
@@ -70,13 +70,13 @@ func TestBookRepository_FindById(t *testing.T) {
 			}
 			defer tx.Rollback()
 			bookRepo := book.NewBookRepository(txdb)
-			createdBook, _ := bookRepo.Create(book.Book{
+			createdBook, _ := bookRepo.Create(nil, book.Book{
 				Title:  "title",
 				Author: "author",
 				Price:  1000,
 			})
 
-			foundBook, err := bookRepo.FindById(createdBook.ID)
+			foundBook, err := bookRepo.FindById(nil, createdBook.ID)
 			a.NoError(err)
 			a.Equal(createdBook.ID, foundBook.ID)
 			a.Equal("title", foundBook.Title)
@@ -99,7 +99,7 @@ func TestBookRepository_FindById(t *testing.T) {
 			}
 			defer tx.Rollback()
 			bookRepo := book.NewBookRepository(txdb)
-			_, err := bookRepo.FindById("no-id")
+			_, err := bookRepo.FindById(nil, "no-id")
 			a.Error(err)
 			return nil
 
@@ -119,13 +119,13 @@ func TestBookRepository_FindByTitle(t *testing.T) {
 			}
 			defer tx.Rollback()
 			bookRepo := book.NewBookRepository(txdb)
-			createdBook, _ := bookRepo.Create(book.Book{
+			createdBook, _ := bookRepo.Create(nil, book.Book{
 				Title:  "title",
 				Author: "author",
 				Price:  1000,
 			})
 
-			foundBook, err := bookRepo.FindByTitle(createdBook.Title)
+			foundBook, err := bookRepo.FindByTitle(nil, createdBook.Title)
 			a.NoError(err)
 			a.Equal(createdBook.ID, foundBook.ID)
 			a.Equal("title", foundBook.Title)
@@ -148,7 +148,7 @@ func TestBookRepository_FindByTitle(t *testing.T) {
 			}
 			defer tx.Rollback()
 			bookRepo := book.NewBookRepository(txdb)
-			_, err := bookRepo.FindByTitle("no-title")
+			_, err := bookRepo.FindByTitle(nil, "no-title")
 			a.Error(err)
 			return nil
 
@@ -168,13 +168,13 @@ func TestBookRepository_FindByAuthor(t *testing.T) {
 			}
 			defer tx.Rollback()
 			bookRepo := book.NewBookRepository(txdb)
-			createdBook, _ := bookRepo.Create(book.Book{
+			createdBook, _ := bookRepo.Create(nil, book.Book{
 				Title:  "title",
 				Author: "author",
 				Price:  1000,
 			})
 
-			foundBooks, err := bookRepo.FindByAuthor(createdBook.Author)
+			foundBooks, err := bookRepo.FindByAuthor(nil, createdBook.Author)
 			a.NoError(err)
 			a.Len(*foundBooks, 1)
 			a.Equal(createdBook.ID, (*foundBooks)[0].ID)
@@ -199,7 +199,7 @@ func TestBookRepository_Create(t *testing.T) {
 			}
 			defer tx.Rollback()
 			bookRepo := book.NewBookRepository(txdb)
-			createdBook, err := bookRepo.Create(book.Book{
+			createdBook, err := bookRepo.Create(nil, book.Book{
 				Title:  "title",
 				Author: "author",
 				Price:  1000,
@@ -224,7 +224,7 @@ func TestBookRepository_Create(t *testing.T) {
 			}
 			defer tx.Rollback()
 			bookRepo := book.NewBookRepository(txdb)
-			createdBook, err := bookRepo.Create(book.Book{
+			createdBook, err := bookRepo.Create(nil, book.Book{
 				Title:  "title",
 				Author: "author",
 				Price:  1000,
@@ -235,7 +235,7 @@ func TestBookRepository_Create(t *testing.T) {
 			a.Equal("author", createdBook.Author)
 			a.Equal(int64(1000), createdBook.Price)
 
-			createdBook, err = bookRepo.Create(book.Book{
+			createdBook, err = bookRepo.Create(nil, book.Book{
 				Title:  "title",
 				Author: "author",
 				Price:  1000,
@@ -246,7 +246,7 @@ func TestBookRepository_Create(t *testing.T) {
 			a.Equal("author", createdBook.Author)
 			a.Equal(int64(1000), createdBook.Price)
 
-			allBooks, err := bookRepo.FindAll()
+			allBooks, err := bookRepo.FindAll(nil)
 			a.NoError(err)
 			a.Len(*allBooks, 1)
 

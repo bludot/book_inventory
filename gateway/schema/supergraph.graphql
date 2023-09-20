@@ -1,0 +1,210 @@
+schema
+  @link(url: "https://specs.apollo.dev/link/v1.0")
+  @link(url: "https://specs.apollo.dev/join/v0.3", for: EXECUTION)
+{
+  query: Query
+  mutation: Mutation
+}
+
+directive @join__enumValue(graph: join__Graph!) repeatable on ENUM_VALUE
+
+directive @join__field(graph: join__Graph, requires: join__FieldSet, provides: join__FieldSet, type: String, external: Boolean, override: String, usedOverridden: Boolean) repeatable on FIELD_DEFINITION | INPUT_FIELD_DEFINITION
+
+directive @join__graph(name: String!, url: String!) on ENUM_VALUE
+
+directive @join__implements(graph: join__Graph!, interface: String!) repeatable on OBJECT | INTERFACE
+
+directive @join__type(graph: join__Graph!, key: join__FieldSet, extension: Boolean! = false, resolvable: Boolean! = true, isInterfaceObject: Boolean! = false) repeatable on OBJECT | INTERFACE | UNION | ENUM | INPUT_OBJECT | SCALAR
+
+directive @join__unionMember(graph: join__Graph!, member: String!) repeatable on UNION
+
+directive @link(url: String, as: String, for: link__Purpose, import: [link__Import]) repeatable on SCHEMA
+
+type ApiInfo
+  @join__type(graph: INVENTORY)
+  @join__type(graph: ODER)
+  @join__type(graph: USER)
+{
+  inventoryApi: InventoryApi! @join__field(graph: INVENTORY)
+  name: String!
+  orderApi: OrderApi! @join__field(graph: ODER)
+  userApi: UserApi! @join__field(graph: USER)
+}
+
+type Book
+  @join__type(graph: INVENTORY, key: "id")
+{
+  id: String!
+  title: String!
+  author: String!
+  price: Int!
+  createdAt: Date!
+  updatedAt: Date!
+}
+
+input CreateBookInput
+  @join__type(graph: INVENTORY)
+{
+  title: String!
+  author: String!
+  price: Int!
+}
+
+input CreateOrderInput
+  @join__type(graph: ODER)
+{
+  userId: String!
+  products: [String!]!
+  quantity: [Int!]!
+}
+
+"""RFC3339 formatted Date"""
+scalar Date
+  @join__type(graph: INVENTORY)
+  @join__type(graph: ODER)
+  @join__type(graph: USER)
+
+type InventoryApi
+  @join__type(graph: INVENTORY)
+{
+  """Version of event publish service"""
+  version: String!
+}
+
+scalar join__FieldSet
+
+enum join__Graph {
+  INVENTORY @join__graph(name: "inventory", url: "http://inventory-api:3000/graphql")
+  ODER @join__graph(name: "oder", url: "http://order-api:3000/graphql")
+  USER @join__graph(name: "user", url: "http://user-api:3000/graphql")
+}
+
+scalar link__Import
+
+enum link__Purpose {
+  """
+  `SECURITY` features provide metadata necessary to securely resolve fields.
+  """
+  SECURITY
+
+  """
+  `EXECUTION` features provide metadata necessary for operation execution.
+  """
+  EXECUTION
+}
+
+type Mutation
+  @join__type(graph: INVENTORY)
+  @join__type(graph: ODER)
+{
+  createBook(input: CreateBookInput!): Book! @join__field(graph: INVENTORY)
+  deleteBook(id: String!): Book! @join__field(graph: INVENTORY)
+  createOrder(input: CreateOrderInput!): Order! @join__field(graph: ODER)
+  updateOrderStatus(input: UpdateOrderStatusInput!): Order! @join__field(graph: ODER)
+}
+
+type Order
+  @join__type(graph: INVENTORY, key: "products")
+  @join__type(graph: ODER, key: "id")
+{
+  products: [String!]!
+  books: [Book!]! @join__field(graph: INVENTORY)
+  id: ID! @join__field(graph: ODER)
+  userId: ID! @join__field(graph: ODER)
+  status: OrderStatus! @join__field(graph: ODER)
+  total: Int! @join__field(graph: ODER)
+  createdAt: String! @join__field(graph: ODER)
+  updatedAt: String! @join__field(graph: ODER)
+}
+
+type OrderApi
+  @join__type(graph: ODER)
+{
+  """Version of event publish service"""
+  version: String!
+}
+
+enum OrderStatus
+  @join__type(graph: ODER)
+{
+  CREATED @join__enumValue(graph: ODER)
+  PENDING @join__enumValue(graph: ODER)
+  COMPLETED @join__enumValue(graph: ODER)
+  CANCELLED @join__enumValue(graph: ODER)
+  UNKNOWN @join__enumValue(graph: ODER)
+}
+
+type Product
+  @join__type(graph: ODER, key: "id")
+{
+  id: ID!
+  name: String!
+  price: Int!
+}
+
+type Query
+  @join__type(graph: INVENTORY)
+  @join__type(graph: ODER)
+  @join__type(graph: USER)
+{
+  apiInfo: ApiInfo!
+  books: [Book!]! @join__field(graph: INVENTORY)
+  book(id: String!): Book! @join__field(graph: INVENTORY)
+  booksByAuthor(author: String!): [Book!]! @join__field(graph: INVENTORY)
+  bookByTitle(title: String!): Book! @join__field(graph: INVENTORY)
+  orders: [Order!]! @join__field(graph: ODER)
+  order(id: ID!): Order! @join__field(graph: ODER)
+  ordersByUser(userId: ID!): [Order!]! @join__field(graph: ODER)
+  register(input: RegisterInput!): User! @join__field(graph: USER)
+  signIn(input: SignInInput!): SignInPayload! @join__field(graph: USER)
+}
+
+input RegisterInput
+  @join__type(graph: USER)
+{
+  name: String!
+  email: String!
+  password: String!
+}
+
+input SignInInput
+  @join__type(graph: USER)
+{
+  email: String!
+  password: String!
+}
+
+type SignInPayload
+  @join__type(graph: USER)
+{
+  token: String!
+  user: User!
+}
+
+"""RFC3339 formatted DateTime"""
+scalar Time
+  @join__type(graph: INVENTORY)
+  @join__type(graph: ODER)
+  @join__type(graph: USER)
+
+input UpdateOrderStatusInput
+  @join__type(graph: ODER)
+{
+  id: String!
+  status: OrderStatus!
+}
+
+type User
+  @join__type(graph: USER, key: "id")
+{
+  id: ID!
+  name: String!
+  email: String!
+}
+
+type UserApi
+  @join__type(graph: USER)
+{
+  """Version of event publish service"""
+  version: String!
+}

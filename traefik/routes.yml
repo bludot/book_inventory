@@ -1,0 +1,33 @@
+http:
+  routers:
+
+    user-route:
+      rule: "Host(`localhost`) && PathPrefix(`/api/user`)"
+      # If the rule matches, applies the middleware
+      # If the rule matches, forward to the whoami service (declared below)
+      service: userApi
+    inventory-route:
+      rule: "Host(`localhost`) && PathPrefix(`/api/inventory`)"
+      # If the rule matches, applies the middleware
+      # If the rule matches, forward to the whoami service (declared below)
+      service: inventoryApi
+    order-route:
+      rule: "Host(`localhost`) && PathPrefix(`/api/order`)"
+      # If the rule matches, applies the middleware
+      # If the rule matches, forward to the whoami service (declared below)
+      service: orderApi
+
+  services:
+    # Define how to reach an existing service on our infrastructure
+    userApi:
+      loadBalancer:
+        servers:
+          - url: http://user-api:3000
+    inventoryApi:
+        loadBalancer:
+            servers:
+            - url: http://inventory-api:3000
+    orderApi:
+        loadBalancer:
+            servers:
+            - url: http://order-api:3000

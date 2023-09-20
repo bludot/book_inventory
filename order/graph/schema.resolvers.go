@@ -19,12 +19,12 @@ func (r *apiInfoResolver) OrderAPI(ctx context.Context, obj *model.APIInfo) (*mo
 }
 
 // CreateOrder is the resolver for the createOrder field.
-func (r *mutationResolver) CreateOrder(ctx context.Context, userID string, products []string) (*model.Order, error) {
-	panic(fmt.Errorf("not implemented: CreateOrder - createOrder"))
+func (r *mutationResolver) CreateOrder(ctx context.Context, input model.CreateOrderInput) (*model.Order, error) {
+	return resolvers.CreateOrder(ctx, r.OrderService, input)
 }
 
 // UpdateOrderStatus is the resolver for the updateOrderStatus field.
-func (r *mutationResolver) UpdateOrderStatus(ctx context.Context, id string, status model.OrderStatus) (*model.Order, error) {
+func (r *mutationResolver) UpdateOrderStatus(ctx context.Context, input model.UpdateOrderStatusInput) (*model.Order, error) {
 	panic(fmt.Errorf("not implemented: UpdateOrderStatus - updateOrderStatus"))
 }
 
@@ -40,7 +40,12 @@ func (r *queryResolver) Orders(ctx context.Context) ([]*model.Order, error) {
 
 // Order is the resolver for the order field.
 func (r *queryResolver) Order(ctx context.Context, id string) (*model.Order, error) {
-	panic(fmt.Errorf("not implemented: Order - order"))
+	return resolvers.GetOrderByID(ctx, r.OrderService, id)
+}
+
+// OrdersByUser is the resolver for the ordersByUser field.
+func (r *queryResolver) OrdersByUser(ctx context.Context, userID string) ([]*model.Order, error) {
+	return resolvers.GetOrdersByUserID(ctx, r.OrderService, userID)
 }
 
 // ApiInfo returns generated.ApiInfoResolver implementation.

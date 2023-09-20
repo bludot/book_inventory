@@ -39,6 +39,21 @@ func (m *MockBookServiceImpl) EXPECT() *MockBookServiceImplMockRecorder {
 	return m.recorder
 }
 
+// CreateBook mocks base method.
+func (m *MockBookServiceImpl) CreateBook(arg0 context.Context, arg1 book.Book) (*book.Book, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "CreateBook", arg0, arg1)
+	ret0, _ := ret[0].(*book.Book)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// CreateBook indicates an expected call of CreateBook.
+func (mr *MockBookServiceImplMockRecorder) CreateBook(arg0, arg1 any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateBook", reflect.TypeOf((*MockBookServiceImpl)(nil).CreateBook), arg0, arg1)
+}
+
 // FindAllBooks mocks base method.
 func (m *MockBookServiceImpl) FindAllBooks(arg0 context.Context) (*[]book.Book, error) {
 	m.ctrl.T.Helper()
@@ -97,4 +112,19 @@ func (m *MockBookServiceImpl) FindBooksByAuthor(arg0 context.Context, arg1 strin
 func (mr *MockBookServiceImplMockRecorder) FindBooksByAuthor(arg0, arg1 any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "FindBooksByAuthor", reflect.TypeOf((*MockBookServiceImpl)(nil).FindBooksByAuthor), arg0, arg1)
+}
+
+// FindBooksByIDs mocks base method.
+func (m *MockBookServiceImpl) FindBooksByIDs(arg0 context.Context, arg1 []string) (*[]book.Book, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "FindBooksByIDs", arg0, arg1)
+	ret0, _ := ret[0].(*[]book.Book)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// FindBooksByIDs indicates an expected call of FindBooksByIDs.
+func (mr *MockBookServiceImplMockRecorder) FindBooksByIDs(arg0, arg1 any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "FindBooksByIDs", reflect.TypeOf((*MockBookServiceImpl)(nil).FindBooksByIDs), arg0, arg1)
 }

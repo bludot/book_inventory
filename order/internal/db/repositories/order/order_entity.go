@@ -11,6 +11,7 @@ type Order struct {
 	ProductId     *string   `gorm:"column:product_id;type:uuid" json:"product_id"`
 	Quantity      int64     `gorm:"column:quantity" json:"quantity"`
 	Price         int64     `gorm:"column:price" json:"price"`
+	Status        string    `gorm:"column:status" json:"status"`
 	CreatedAt     time.Time `gorm:"column:created_at" json:"created_at"`
 	UpdatedAt     time.Time `gorm:"column:updated_at" json:"updated_at"`
 }

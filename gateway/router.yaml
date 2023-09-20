@@ -1,0 +1,54 @@
+supergraph:
+  listen: 0.0.0.0:4000
+  introspection: true
+
+sandbox:
+  enabled: true
+
+homepage:
+  enabled: false
+
+federation_version: =2.5.0
+subgraphs:
+  user:
+    schema:
+      subgraph_url: http://localhost:3000/graphql # Schema provided via introspection, routing_url can be omitted
+  inventory:
+    schema:
+      subgraph_url: http://localhost:3001/graphql
+  oder:
+    schema:
+      subgraph_url: http://localhost:3002/graphql
+
+
+plugins:
+  demo.jwt_validation:
+    secret_key: |
+      -----BEGIN RSA PRIVATE KEY-----
+      MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQC9nzFLD5d3HTuB
+      bjfJQjay95CTvflqhuISu1KupUMdnHB7Ft9vxRqgl6ZV1Yd9eSijGd9pWisaJhlW
+      WEVdHcjJsWeULrzdAFRp/463A3k27hjRnOHJgWNNgIY6Pxrg3tgVbI7ZScsorSBS
+      hvHqfcMyZpBCOEuyQYJ1LEYSOO6y6sKpOmhikjYHxG5p9Z6EtjeFcugdZkx55bFQ
+      JRuwFZwHAO6Yd/9ykmN/1FEOnUmrH9dGQOFBVxmSePe4NanKTwQ0pQDglHW+N5cx
+      CeeoVufioyQmnv1pVAkdoRUJOT29Zt9nL1UwiCZAIVMeQZR5ONkp5YBr/ZbxjLVl
+      CASWScApAgMBAAECggEAI8vtrlHfMilelmyMM35AfUCnFn0CnM2h2A9s6HNiXDCw
+      O0xyGdOH11FJoWKSFWnN9hxoRKc1A9a1act4LL/2q7zF5P99v+rUBL6t3nbVZz1D
+      ii6noTa/3F2q+Uv4cwMen8zCmtqHc8JbG7lF6hKbyuP5z8Z448niKuSUxdPhm/zJ
+      /6kj+NDQqy8n1/PVDcQqaeoJ8/p3VPqjTVuPTeD2puF3ENGmxih0eep5by3jEuHG
+      y4aWqOWrsZVOnnrHBTQHg5T+9wte4dZUJGlzGlKYDLYop3Eq95EF+DoAFROwnHFt
+      DPEvLIAgY991TxCpOGH2+8B2pcrizAiyz2lCI9tmAQKBgQDxsvWyljKlO/TKOK1J
+      q25ivdtLHgZ39TsKwEknSwaPEVV2l7ziXNTiT6U2jTipVIRHKea0D778mnxKWcwt
+      C+/44VQAXltSoSkBahNIO6mWxKN/sy0Kv5uLErKZ9L6eAll2T4rBn0hC8ZXCd09A
+      gja0VGnwkSD4sY/yrOaqREGXUQKBgQDI12n2kJlOf9WJubCuNGHmM1ihQn15pqSv
+      gD1bvdzh7HrtPLj4Vw9OpqVkTMRXfKnDpeIeTmP1FxY/impd3yq4ZoIHypixnT0k
+      aWcyV3QTTeAUZv4GA+//Yeu+OTuFKNe/CfCjLPMk29Ue9ciGRBTx+qgfvbIlboNd
+      U6YpoUqVWQKBgQCUjjNXvduJFa3icS2JPzYMuLbFl8HQD0ln1UHhRcrVOok16BOv
+      afFq3BsmyWwPH6Rh/Q4QlDEGH4nPRRwqf9DSPuSbiWNGCUoj1WfemNUmltwLTDye
+      A6D9vNNLr1NN2RHVlxQo59bJVqV+rkhm1OH8unmW5AzI7pIUTVNFSciq0QKBgAmD
+      KmGjN5+gLlz3joaxtHFSvT/mBktcuTAWwtE1jOCmcqwJ1Dju5qqy+eJmQGZkYSYD
+      FVKaI+HX1hXsWF1Z1IwnTsFPtyuyZtLyqxCXU8gWSCavOhjO1u8hlCjOTSNha9aA
+      ggU4e8ujHdT5jyXM07EiThQyx909/rrM23HdUcsBAoGBALT/333RtCMJA+zqqucL
+      CP/aix6W1VXWSGgOiZ1Rgq9oDum6SyAy2DcVuvOtiv8ZTgbhKEJKKNuS3O4c7A1A
+      8Xp/zumO4/ek0SuaqUWJePsOyEgykjElO6++9fk5LC6pvTCPfCyo1DFtmqYYSLdn
+      xe3iCl2nUo+OmVXPePl2If2O
+      -----END RSA PRIVATE KEY-----

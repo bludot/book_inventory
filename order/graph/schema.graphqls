@@ -26,11 +26,12 @@ type Product @key(fields: "id") {
     price: Int!
 }
 
+
 type Order @key(fields: "id") {
     id: ID!
     userId: ID!
     status: OrderStatus!
-    products: [Product!]!
+    products: [String!]!
     total: Int!
     createdAt: String!
     updatedAt: String!
@@ -42,9 +43,21 @@ type Query {
     apiInfo: ApiInfo!
     orders: [Order!]!
     order(id: ID!): Order!
+    ordersByUser(userId: ID!): [Order!]!
 }
 
 type Mutation {
-    createOrder(userId: ID!, products: [ID!]!): Order!
-    updateOrderStatus(id: ID!, status: OrderStatus!): Order!
+    createOrder(input: CreateOrderInput!): Order!
+    updateOrderStatus(input: UpdateOrderStatusInput!): Order!
+}
+
+input CreateOrderInput {
+    userId: String!
+    products: [String!]!
+    quantity: [Int!]!
+}
+
+input UpdateOrderStatusInput {
+    id: String!
+    status: OrderStatus!
 }

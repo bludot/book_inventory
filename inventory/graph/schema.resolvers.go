@@ -6,6 +6,7 @@ package graph
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/bludot/tempmee/inventory/graph/generated"
 	"github.com/bludot/tempmee/inventory/graph/model"
@@ -15,6 +16,16 @@ import (
 // InventoryAPI is the resolver for the inventoryApi field.
 func (r *apiInfoResolver) InventoryAPI(ctx context.Context, obj *model.APIInfo) (*model.InventoryAPI, error) {
 	return resolvers.InventoryAPI(r.Config)
+}
+
+// CreateBook is the resolver for the createBook field.
+func (r *mutationResolver) CreateBook(ctx context.Context, input model.CreateBookInput) (*model.Book, error) {
+	return resolvers.CreateBook(ctx, r.BookService, input)
+}
+
+// DeleteBook is the resolver for the deleteBook field.
+func (r *mutationResolver) DeleteBook(ctx context.Context, id string) (*model.Book, error) {
+	panic(fmt.Errorf("not implemented: DeleteBook - deleteBook"))
 }
 
 // APIInfo is the resolver for the apiInfo field.
@@ -45,8 +56,12 @@ func (r *queryResolver) BookByTitle(ctx context.Context, title string) (*model.B
 // ApiInfo returns generated.ApiInfoResolver implementation.
 func (r *Resolver) ApiInfo() generated.ApiInfoResolver { return &apiInfoResolver{r} }
 
+// Mutation returns generated.MutationResolver implementation.
+func (r *Resolver) Mutation() generated.MutationResolver { return &mutationResolver{r} }
+
 // Query returns generated.QueryResolver implementation.
 func (r *Resolver) Query() generated.QueryResolver { return &queryResolver{r} }
 
 type apiInfoResolver struct{ *Resolver }
+type mutationResolver struct{ *Resolver }
 type queryResolver struct{ *Resolver }

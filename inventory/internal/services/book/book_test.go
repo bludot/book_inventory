@@ -20,7 +20,7 @@ func TestInventory_FindAllBooks(t *testing.T) {
 
 		bookRepo := mocks.NewMockBookRepositoryImpl(ctrl)
 
-		bookRepo.EXPECT().FindAll().Return(&[]bookRepository.Book{
+		bookRepo.EXPECT().FindAll(gomock.Any()).Return(&[]bookRepository.Book{
 			{
 				Title:  "title",
 				Author: "author",
@@ -47,7 +47,7 @@ func TestInventory_FindAllBooks(t *testing.T) {
 
 		bookRepo := mocks.NewMockBookRepositoryImpl(ctrl)
 
-		bookRepo.EXPECT().FindAll().Return(&[]bookRepository.Book{}, nil)
+		bookRepo.EXPECT().FindAll(gomock.Any()).Return(&[]bookRepository.Book{}, nil)
 
 		inventory := book.NewBookService(bookRepo)
 		books, err := inventory.FindAllBooks(ctx)
@@ -66,7 +66,7 @@ func TestInventory_FindAllBooks(t *testing.T) {
 
 		bookRepo := mocks.NewMockBookRepositoryImpl(ctrl)
 
-		bookRepo.EXPECT().FindAll().Return(nil, assert.AnError)
+		bookRepo.EXPECT().FindAll(gomock.Any()).Return(nil, assert.AnError)
 
 		inventory := book.NewBookService(bookRepo)
 		books, err := inventory.FindAllBooks(ctx)
@@ -88,7 +88,7 @@ func TestInventory_FindBookById(t *testing.T) {
 
 		bookRepo := mocks.NewMockBookRepositoryImpl(ctrl)
 
-		bookRepo.EXPECT().FindById("id").Return(&bookRepository.Book{
+		bookRepo.EXPECT().FindById(gomock.Any(), "id").Return(&bookRepository.Book{
 			Title:  "title",
 			Author: "author",
 			Price:  1000,
@@ -113,7 +113,7 @@ func TestInventory_FindBookById(t *testing.T) {
 
 		bookRepo := mocks.NewMockBookRepositoryImpl(ctrl)
 
-		bookRepo.EXPECT().FindById("id").Return(nil, assert.AnError)
+		bookRepo.EXPECT().FindById(gomock.Any(), "id").Return(nil, assert.AnError)
 
 		inventory := book.NewBookService(bookRepo)
 		book, err := inventory.FindBookById(ctx, "id")
@@ -134,7 +134,7 @@ func TestInventory_FindBookByTitle(t *testing.T) {
 
 		bookRepo := mocks.NewMockBookRepositoryImpl(ctrl)
 
-		bookRepo.EXPECT().FindByTitle("title").Return(&bookRepository.Book{
+		bookRepo.EXPECT().FindByTitle(gomock.Any(), "title").Return(&bookRepository.Book{
 			Title:  "title",
 			Author: "author",
 			Price:  1000,
@@ -159,7 +159,7 @@ func TestInventory_FindBookByTitle(t *testing.T) {
 
 		bookRepo := mocks.NewMockBookRepositoryImpl(ctrl)
 
-		bookRepo.EXPECT().FindByTitle("title").Return(nil, assert.AnError)
+		bookRepo.EXPECT().FindByTitle(gomock.Any(), "title").Return(nil, assert.AnError)
 
 		inventory := book.NewBookService(bookRepo)
 		book, err := inventory.FindBookByTitle(ctx, "title")
@@ -180,7 +180,7 @@ func TestInventory_FindBooksByAuthor(t *testing.T) {
 
 		bookRepo := mocks.NewMockBookRepositoryImpl(ctrl)
 
-		bookRepo.EXPECT().FindByAuthor("author").Return(&[]bookRepository.Book{
+		bookRepo.EXPECT().FindByAuthor(gomock.Any(), "author").Return(&[]bookRepository.Book{
 			{
 				Title:  "title",
 				Author: "author",
@@ -207,7 +207,7 @@ func TestInventory_FindBooksByAuthor(t *testing.T) {
 
 		bookRepo := mocks.NewMockBookRepositoryImpl(ctrl)
 
-		bookRepo.EXPECT().FindByAuthor("author").Return(nil, assert.AnError)
+		bookRepo.EXPECT().FindByAuthor(gomock.Any(), "author").Return(nil, assert.AnError)
 
 		inventory := book.NewBookService(bookRepo)
 		books, err := inventory.FindBooksByAuthor(ctx, "author")

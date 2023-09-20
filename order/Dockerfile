@@ -33,6 +33,6 @@ ENV VERSION=$VERSION
 
 USER nonroot
 
-CMD ["./main", "serve"]
+CMD ["./main", "serve", "graphql"]
 
 # Expose port 8080 to the outside world

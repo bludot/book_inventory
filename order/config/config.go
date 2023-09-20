@@ -3,9 +3,10 @@ package config
 import "github.com/jinzhu/configor"
 
 type Config struct {
-	AppConfig AppConfig
-	DBConfig  DBConfig
-	JWTConfig JWTConfig
+	AppConfig          AppConfig
+	DBConfig           DBConfig
+	JWTConfig          JWTConfig
+	InventoryAPIConfig InventoryAPIConfig
 }
 
 type AppConfig struct {
@@ -31,8 +32,8 @@ type JWTConfig struct {
 }
 
 type InventoryAPIConfig struct {
-	Host string `default:"localhost" env:"INVENTORYAPIHOST"`
-	Port int    `default:"3000" env:"INVENTORYAPIPORT"`
+	Host string `default:"apollo-router" env:"INVENTORYAPIHOST"`
+	Port int    `default:"4000" env:"INVENTORYAPIPORT"`
 }
 
 func LoadConfigOrPanic() Config {

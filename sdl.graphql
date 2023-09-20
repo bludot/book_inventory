@@ -1,0 +1,122 @@
+directive @defer(label: String, if: Boolean! = true) on FRAGMENT_SPREAD | INLINE_FRAGMENT
+
+type ApiInfo {
+    inventoryApi: InventoryApi!
+    name: String!
+    orderApi: OrderApi!
+    userApi: UserApi!
+}
+
+type Book {
+    id: String!
+    title: String!
+    author: String!
+    price: Int!
+    createdAt: Date!
+    updatedAt: Date!
+}
+
+input CreateBookInput {
+    title: String!
+    author: String!
+    price: Int!
+}
+
+input CreateOrderInput {
+    userId: String!
+    products: [String!]!
+    quantity: [Int!]!
+}
+
+"""RFC3339 formatted Date"""
+scalar Date
+
+type InventoryApi {
+    """Version of event publish service"""
+    version: String!
+}
+
+type Mutation {
+    createBook(input: CreateBookInput!): Book!
+    deleteBook(id: String!): Book!
+    createOrder(input: CreateOrderInput!): Order!
+    updateOrderStatus(input: UpdateOrderStatusInput!): Order!
+}
+
+type Order {
+    products: [String!]!
+    books: [Book!]!
+    id: ID!
+    userId: ID!
+    status: OrderStatus!
+    total: Int!
+    createdAt: String!
+    updatedAt: String!
+}
+
+type OrderApi {
+    """Version of event publish service"""
+    version: String!
+}
+
+enum OrderStatus {
+    CREATED
+    PENDING
+    COMPLETED
+    CANCELLED
+    UNKNOWN
+}
+
+type Product {
+    id: ID!
+    name: String!
+    price: Int!
+}
+
+type Query {
+    apiInfo: ApiInfo!
+    books: [Book!]!
+    book(id: String!): Book!
+    booksByAuthor(author: String!): [Book!]!
+    bookByTitle(title: String!): Book!
+    orders: [Order!]!
+    order(id: ID!): Order!
+    ordersByUser(userId: ID!): [Order!]!
+    register(input: RegisterInput!): User!
+    signIn(input: SignInInput!): SignInPayload!
+}
+
+input RegisterInput {
+    name: String!
+    email: String!
+    password: String!
+}
+
+input SignInInput {
+    email: String!
+    password: String!
+}
+
+type SignInPayload {
+    token: String!
+    user: User!
+}
+
+"""RFC3339 formatted DateTime"""
+scalar Time
+
+input UpdateOrderStatusInput {
+    id: String!
+    status: OrderStatus!
+}
+
+type User {
+    id: ID!
+    name: String!
+    email: String!
+}
+
+type UserApi {
+    """Version of event publish service"""
+    version: String!
+}

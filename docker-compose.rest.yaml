@@ -1,0 +1,172 @@
+version: "2.2"
+services:
+  mysql-inventory:
+    command: --default-authentication-plugin=mysql_native_password
+    image: mysql:8.0.33
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=mysecretpassword
+      - MYSQL_USER=inventory
+      - MYSQL_PASSWORD=mysecretpassword
+      - MYSQL_DATABASE=inventory
+    volumes:
+      - 'tempmee-inventory_db:/var/lib/mysql'
+    networks:
+      - tempmee-network
+  mysql-user:
+    command: --default-authentication-plugin=mysql_native_password
+    image: mysql:8.0.33
+    ports:
+      - 3307:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=mysecretpassword
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=mysecretpassword
+      - MYSQL_DATABASE=user
+    volumes:
+      - 'tempmee-user_db:/var/lib/mysql'
+    networks:
+      - tempmee-network
+  mysql-order:
+    command: --default-authentication-plugin=mysql_native_password
+    image: mysql:8.0.33
+    ports:
+      - 3308:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=mysecretpassword
+      - MYSQL_USER=order
+      - MYSQL_PASSWORD=mysecretpassword
+      - MYSQL_DATABASE=order
+    volumes:
+      - 'tempmee-order_db:/var/lib/mysql'
+    networks:
+      - tempmee-network
+  redis:
+    image: redis:5.0.5
+    ports:
+      - '6379:6379'
+    restart: unless-stopped
+    volumes:
+      - './redis.conf:/etc/redis/redis.conf'
+      - redis_data:/data
+    networks:
+      - tempmee-network
+  user-api_migrate:
+    build:
+      context: ./user
+      dockerfile: Dockerfile
+    command: "./main migrate up"
+    restart: always
+    depends_on:
+      - mysql-user
+      - redis
+    networks:
+      - tempmee-network
+    environment:
+      - PORT=3000
+      - DBHOST=mysql-user
+  user-api:
+    build:
+      context: ./user
+      dockerfile: Dockerfile
+    command:
+      - "./main"
+      - "serve"
+      - "http"
+    restart: always
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mysql-user
+      - redis
+    networks:
+      - tempmee-network
+    environment:
+      - PORT=3000
+      - DBHOST=mysql-user
+  inventory-api_migrate:
+    build:
+      context: ./inventory
+      dockerfile: Dockerfile
+    command: "./main migrate up"
+    restart: always
+    depends_on:
+      - mysql-inventory
+      - redis
+    networks:
+      - tempmee-network
+    environment:
+      - PORT=3000
+      - DBHOST=mysql-inventory
+  inventory-api:
+    build:
+      context: ./inventory
+      dockerfile: Dockerfile
+    command:
+      - "./main"
+      - "serve"
+      - "http"
+    restart: always
+    ports:
+      - "3001:3000"
+    depends_on:
+      - mysql-inventory
+      - redis
+    networks:
+      - tempmee-network
+    environment:
+      - PORT=3000
+      - DBHOST=mysql-inventory
+  order-api_migrate:
+    build:
+      context: ./order
+      dockerfile: Dockerfile
+    command: "./main migrate up"
+    restart: always
+    depends_on:
+      - mysql-order
+      - redis
+    networks:
+      - tempmee-network
+    environment:
+      - PORT=3000
+      - DBHOST=mysql-order
+  order-api:
+    build:
+      context: ./order
+      dockerfile: Dockerfile
+    command:
+      - "./main"
+      - "serve"
+      - "http"
+    restart: always
+    ports:
+      - "3002:3000"
+    depends_on:
+      - mysql-order
+      - redis
+    networks:
+      - tempmee-network
+    environment:
+      - PORT=3000
+      - DBHOST=mysql-order
+  traefik:
+    image: traefik:v2.5
+    ports:
+      - '8080:8080'
+      - '4000:80'
+    volumes:
+      - ./traefik/traefik.yml:/etc/traefik/traefik.yml
+      - ./traefik/routes.yml:/etc/traefik/routes.yml
+      - ./traefik/acme.json:/etc/traefik/acme.json
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - tempmee-network
+networks:
+  tempmee-network:
+volumes:
+  tempmee-inventory_db:
+  tempmee-user_db:
+  tempmee-order_db:
+  redis_data:

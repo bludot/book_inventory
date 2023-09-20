@@ -9,6 +9,7 @@
 package mocks
 
 import (
+	context "context"
 	reflect "reflect"
 
 	book "github.com/bludot/tempmee/inventory/internal/db/repositories/book"
@@ -39,76 +40,91 @@ func (m *MockBookRepositoryImpl) EXPECT() *MockBookRepositoryImplMockRecorder {
 }
 
 // Create mocks base method.
-func (m *MockBookRepositoryImpl) Create(arg0 book.Book) (*book.Book, error) {
+func (m *MockBookRepositoryImpl) Create(arg0 context.Context, arg1 book.Book) (*book.Book, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Create", arg0)
+	ret := m.ctrl.Call(m, "Create", arg0, arg1)
 	ret0, _ := ret[0].(*book.Book)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // Create indicates an expected call of Create.
-func (mr *MockBookRepositoryImplMockRecorder) Create(arg0 any) *gomock.Call {
+func (mr *MockBookRepositoryImplMockRecorder) Create(arg0, arg1 any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Create", reflect.TypeOf((*MockBookRepositoryImpl)(nil).Create), arg0)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Create", reflect.TypeOf((*MockBookRepositoryImpl)(nil).Create), arg0, arg1)
 }
 
 // FindAll mocks base method.
-func (m *MockBookRepositoryImpl) FindAll() (*[]book.Book, error) {
+func (m *MockBookRepositoryImpl) FindAll(arg0 context.Context) (*[]book.Book, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "FindAll")
+	ret := m.ctrl.Call(m, "FindAll", arg0)
 	ret0, _ := ret[0].(*[]book.Book)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // FindAll indicates an expected call of FindAll.
-func (mr *MockBookRepositoryImplMockRecorder) FindAll() *gomock.Call {
+func (mr *MockBookRepositoryImplMockRecorder) FindAll(arg0 any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "FindAll", reflect.TypeOf((*MockBookRepositoryImpl)(nil).FindAll))
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "FindAll", reflect.TypeOf((*MockBookRepositoryImpl)(nil).FindAll), arg0)
 }
 
 // FindByAuthor mocks base method.
-func (m *MockBookRepositoryImpl) FindByAuthor(arg0 string) (*[]book.Book, error) {
+func (m *MockBookRepositoryImpl) FindByAuthor(arg0 context.Context, arg1 string) (*[]book.Book, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "FindByAuthor", arg0)
+	ret := m.ctrl.Call(m, "FindByAuthor", arg0, arg1)
 	ret0, _ := ret[0].(*[]book.Book)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // FindByAuthor indicates an expected call of FindByAuthor.
-func (mr *MockBookRepositoryImplMockRecorder) FindByAuthor(arg0 any) *gomock.Call {
+func (mr *MockBookRepositoryImplMockRecorder) FindByAuthor(arg0, arg1 any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "FindByAuthor", reflect.TypeOf((*MockBookRepositoryImpl)(nil).FindByAuthor), arg0)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "FindByAuthor", reflect.TypeOf((*MockBookRepositoryImpl)(nil).FindByAuthor), arg0, arg1)
 }
 
 // FindById mocks base method.
-func (m *MockBookRepositoryImpl) FindById(arg0 string) (*book.Book, error) {
+func (m *MockBookRepositoryImpl) FindById(arg0 context.Context, arg1 string) (*book.Book, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "FindById", arg0)
+	ret := m.ctrl.Call(m, "FindById", arg0, arg1)
 	ret0, _ := ret[0].(*book.Book)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // FindById indicates an expected call of FindById.
-func (mr *MockBookRepositoryImplMockRecorder) FindById(arg0 any) *gomock.Call {
+func (mr *MockBookRepositoryImplMockRecorder) FindById(arg0, arg1 any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "FindById", reflect.TypeOf((*MockBookRepositoryImpl)(nil).FindById), arg0)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "FindById", reflect.TypeOf((*MockBookRepositoryImpl)(nil).FindById), arg0, arg1)
 }
 
 // FindByTitle mocks base method.
-func (m *MockBookRepositoryImpl) FindByTitle(arg0 string) (*book.Book, error) {
+func (m *MockBookRepositoryImpl) FindByTitle(arg0 context.Context, arg1 string) (*book.Book, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "FindByTitle", arg0)
+	ret := m.ctrl.Call(m, "FindByTitle", arg0, arg1)
 	ret0, _ := ret[0].(*book.Book)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // FindByTitle indicates an expected call of FindByTitle.
-func (mr *MockBookRepositoryImplMockRecorder) FindByTitle(arg0 any) *gomock.Call {
+func (mr *MockBookRepositoryImplMockRecorder) FindByTitle(arg0, arg1 any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "FindByTitle", reflect.TypeOf((*MockBookRepositoryImpl)(nil).FindByTitle), arg0)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "FindByTitle", reflect.TypeOf((*MockBookRepositoryImpl)(nil).FindByTitle), arg0, arg1)
+}
+
+// GetBooksByIDs mocks base method.
+func (m *MockBookRepositoryImpl) GetBooksByIDs(arg0 context.Context, arg1 []string) (*[]book.Book, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetBooksByIDs", arg0, arg1)
+	ret0, _ := ret[0].(*[]book.Book)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetBooksByIDs indicates an expected call of GetBooksByIDs.
+func (mr *MockBookRepositoryImplMockRecorder) GetBooksByIDs(arg0, arg1 any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetBooksByIDs", reflect.TypeOf((*MockBookRepositoryImpl)(nil).GetBooksByIDs), arg0, arg1)
 }

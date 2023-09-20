@@ -12,8 +12,13 @@ type ApiInfo {
     name: String!
 }
 
+extend type Order @key(fields: "products") {
+    products: [String!]! @external
+    books: [Book!]!
+}
+
 type Book @key(fields: "id") {
-    id: ID!
+    id: String!
     title: String!
     author: String!
     price: Int!
@@ -24,7 +29,18 @@ type Book @key(fields: "id") {
 type Query {
     apiInfo:  ApiInfo!
     books: [Book!]!
-    book(id: ID!): Book!
+    book(id: String!): Book!
     booksByAuthor(author: String!): [Book!]!
     bookByTitle(title: String!): Book!
+}
+
+type Mutation {
+    createBook(input: CreateBookInput!): Book!
+    deleteBook(id: String!): Book!
+}
+
+input CreateBookInput {
+    title: String!
+    author: String!
+    price: Int!
 }

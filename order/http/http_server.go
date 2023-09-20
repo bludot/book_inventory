@@ -4,6 +4,12 @@ import (
 	"fmt"
 	"github.com/bludot/tempmee/order/config"
 	"github.com/bludot/tempmee/order/http/handlers"
+	order3 "github.com/bludot/tempmee/order/http/http_routes/order"
+	"github.com/bludot/tempmee/order/http/http_utils"
+	"github.com/bludot/tempmee/order/internal/db"
+	"github.com/bludot/tempmee/order/internal/db/repositories/order"
+	"github.com/bludot/tempmee/order/internal/services/jwt"
+	order2 "github.com/bludot/tempmee/order/internal/services/order"
 	"github.com/gorilla/mux"
 	"log"
 	"net/http"
@@ -13,19 +19,18 @@ func SetupHttpServer(cfg config.Config) *mux.Router {
 
 	r := mux.NewRouter()
 
-	//database := db.NewDatabase(cfg.DBConfig)
-	//userRepository := userRepo.NewUserRepository(database)
-	//userService := user.NewUserService(userRepository)
-	//jwtService := jwt.NewJWTService(cfg.JWTConfig, map[string]interface{}{})
-	//httpResolver := &http_utils.HTTPResolver{
-	//	Config:      cfg,
-	//
-	//	JWTService:  jwtService,
-	//}
+	database := db.NewDatabase(cfg.DBConfig)
+	orderRepository := order.NewOrderRepository(database)
+	orderService := order2.NewOrderService(orderRepository)
+	jwtService := jwt.NewJWTService(cfg.JWTConfig, map[string]interface{}{})
+	httpResolver := &http_utils.HTTPResolver{
+		Config:       cfg,
+		OrderService: orderService,
+		JWTService:   jwtService,
+	}
 
 	r.HandleFunc("/healthcheck", handlers.HealthCheckHandler()).Methods("GET")
-	//r.HandleFunc("/api/user/register", userHanlders.RegisterUserHandler(httpResolver)).Methods("POST")
-	//r.HandleFunc("/api/user/signin", userHanlders.SignInUserHandler(httpResolver)).Methods("POST")
+	order3.RegisterOrderRoutes(httpResolver, r)
 
 	return r
 }

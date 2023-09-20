@@ -17,6 +17,11 @@ func (r *entityResolver) FindBookByID(ctx context.Context, id string) (*model.Bo
 	return resolvers.BookByID(ctx, r.BookService, id)
 }
 
+// FindOrderByProducts is the resolver for the findOrderByProducts field.
+func (r *entityResolver) FindOrderByProducts(ctx context.Context, products []string) (*model.Order, error) {
+	return resolvers.FindOrderByProducts(ctx, r.BookService, products)
+}
+
 // Entity returns generated.EntityResolver implementation.
 func (r *Resolver) Entity() generated.EntityResolver { return &entityResolver{r} }
 
